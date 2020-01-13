@@ -28,7 +28,7 @@ archiveData: [
   { 
     id: 4,
     title: 'yakonomo',
-    image: '/IMG_9690.JP'
+    image: '/IMG_9690.JPG'
   },
   { 
     id: 5,

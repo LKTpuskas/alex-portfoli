@@ -60,8 +60,9 @@ const Archive = memo(props => {
   // const projectExists = props.archiveData && props.archiveData.data;
 
   const mouseMovement = (event) => {
-    console.log('horizontal', event.clientX)
-    console.log('vertical', event.clientY)/*  useCallback(() => setXPosition(event.clientX + 20), [xPosition])
+    //console.log('horizontal', event.clientX)
+   // console.log('vertical', event.clientY)
+    /*  useCallback(() => setXPosition(event.clientX + 20), [xPosition])
     useCallback(() => setYPosition(event.clientY + 20), [yPosition]) */
     setXPosition(event.clientX + 20, [xPosition])
     setYPosition(event.clientY + 20, [yPosition])
@@ -73,21 +74,22 @@ const Archive = memo(props => {
       <section className={sectionWrapper} >
         {
           props.archiveData ? props.archiveData.map((a, index) => {
-            // const titleWithoutSpaces = a.title.replace(/\s+/g, '');
-            return (
-              <li className={archiveList} key={index} >
-                <LinkButton
-                  href={`archive/gallery?id=${a.id}`}
-                  name={a.title}
-                  className={projectItem(isHovered)}
-                  onMouseMove={(e) => mouseMovement(e)}
-                  onMouseEnter={() => onHover(index, true)}
-                  onMouseLeave={() => onHover(index, false)}/>
-                {currentPos === index // a.image
-                  ? <img src={a.image} alt="" className={photoOverlay(isHovered, xPosition, yPosition)} /> : null
-                }
-              </li>
-            )
+            // const titleWithoutSpaces = a.title.replace(/\s+/g, '');                           USE REACH UI MODAL
+              return (
+                <li className={archiveList} key={index} >
+                  <LinkButton
+                    href={`archive/[id]`}
+                    as={`archive/${a.id}`}
+                    name={a.title}
+                    className={projectItem(isHovered)}
+                    onMouseMove={(e) => mouseMovement(e)}
+                    onMouseEnter={() => onHover(index, true)}
+                    onMouseLeave={() => onHover(index, false)}/>
+                  {currentPos === index // a.image
+                    ? <img src={a.image} alt="" className={photoOverlay(isHovered, xPosition, yPosition)} /> : null
+                  }
+                </li>
+              )
           }) : []
         }
       </section>

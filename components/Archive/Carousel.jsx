@@ -30,69 +30,112 @@ const flexRowWrapper = css`
   margin: 3rem;
 `
 
+const archiveWrapper = css`
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+`;
+
 class Carousel extends React.Component {
+  debugger
   state = {
-    currentImageIndex: 0 || this.props.images.findIndex(image => this.props.router.query.id === String(image.id)),
-    isFaded: true
+    currentImageIndex: 0 || Number(this.props.router.query.id) - 1,
+    isFaded: true,
+    isNextPrevious: false
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const nextIndex = Number(nextProps.router.query.id)
+    console.log('nextIndex', nextIndex)
+    console.log('nextIndex', nextIndex, prevState.currentImageIndex)
+    if (nextIndex !== this.props.router) {
+      return {
+        currentImageIndex: nextIndex,
+
+      };
+    }
+   }
 
   setIsFaded = (funcType) => {
     this.setState({ isFaded: false }, funcType)
   }
 
   previousSlide = () => {
-    const lastIndex = this.props.images.length - 1;
+    const lastIndex = this.props.archiveData.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === 0;
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
-    setTimeout(() => this.setState({
+    /* setTimeout(() => this.setState({
       currentImageIndex: index,
       isFaded: true
-    }), 800)
+    }), 800) */
+    this.setState({
+      currentImageIndex: index,
+      isFaded: true,
+      sNextPrevious: true,
+    })
   }
 
   nextSlide = () => {
-    const lastIndex = this.props.images.length - 1;
+    const lastIndex = this.props.archiveData.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === lastIndex;
+    debugger
     const index = shouldResetIndex ? 0 : currentImageIndex + 1;
-    setTimeout(() => this.setState({
+    console.log('next index', index)
+    this.setState({
+      currentImageIndex: index,
+      isNextPrevious: true,
+      isFaded: true
+    })
+   /*  setTimeout(() => this.setState({
       currentImageIndex: index,
       isFaded: true
-    }), 800)
+    }), 800) */
   }
 
   render() {
+    //console.log(this.props.router)
+    const { archiveData, router } = this.props
     const { currentImageIndex, isFaded } = this.state;
-    const selectedImage = this.props.images[currentImageIndex];
-    const hrefId = `gallery?id=${selectedImage.id}`;
-    return (
-      <div className={flexRowWrapper}>
-        <LinkButton
-          href={hrefId}
-          name={'Previous'}
-          onClick={() => this.setIsFaded(this.previousSlide)}/>
-        <CSSTransition
-          in={isFaded}
-          timeout={800}
-          classNames={{
-            enter: imageEnter,
-            enterActive: imageEnterActive,
-            exit: imageExit,
-            exitActive: imageExitActive,
-            exitDone: imageExitDone
-          }}
-          unmountOnExit
-          appear
-        >
-          <ImageSlide currentIndex={currentImageIndex} images={this.props.images} selectedImage={selectedImage} opacity={isFaded} />
-        </CSSTransition>
-        <LinkButton
-          href={hrefId}
-          name={'Next'}
-          onClick={() => this.setIsFaded(this.nextSlide)}/>
-      </div>
-    );
+    console.log(currentImageIndex)
+    // const queryIndex = router.query ? Number(router.query.id) - 1 : null
+
+   
+      const selectedImage = currentImageIndex && archiveData[currentImageIndex];
+  
+    const refId = '[id]';
+    const refIdAs = `${String(selectedImage.id)}`;
+    // const hrefIdAs = selectedImage && `gallery?id=${selectedImage.id}`
+    return !isNaN(currentImageIndex) ? <div className={archiveWrapper}>
+    <LinkButton href={'/archive'} name={'Back to Archive'}/>
+    <div className={flexRowWrapper}>
+      <LinkButton
+        name={'Previous'}
+        onClick={() => this.setIsFaded(this.previousSlide)}/>
+      <CSSTransition
+        in={isFaded}
+        timeout={800}
+        classNames={{
+          enter: imageEnter,
+          enterActive: imageEnterActive,
+          exit: imageExit,
+          exitActive: imageExitActive,
+          exitDone: imageExitDone
+        }}
+        unmountOnExit
+        appear
+      >
+        <ImageSlide currentIndex={currentImageIndex} images={archiveData} selectedImage={selectedImage} opacity={isFaded} />
+      </CSSTransition>
+      <LinkButton
+        name={'Next'}
+        onClick={() => this.setIsFaded(this.nextSlide)}/>
+    </div>
+  </div> : <div>LOADING</div> /* (
+      
+    ); */
   }
 }
 

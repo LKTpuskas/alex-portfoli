@@ -16,7 +16,6 @@ function getRandomInt(min, max) {
 
 const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
   React.useEffect(() => {
-    console.log('image did mount');
     getRightImageIndex(images, currentIndex)
   },[])
 
@@ -52,6 +51,7 @@ const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
   const imageExist = selectedImage && selectedImage.image;
   const nextImageRight = images[getRightImageIndex(images, currentIndex)]
   const nextImageLeft = selectedImage.length - 1;
+  debugger;
   return imageExist ? (
     <div className={imageWrapper}>
       <img className={leftStyle} src={imageExist} />
