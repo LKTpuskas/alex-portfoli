@@ -1,7 +1,10 @@
 import { useState, useMemo, useCallback, memo } from 'react';
+import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
 import { debounce } from 'lodash';
 import { css } from 'emotion';
 import LinkButton from '../LinkButton';
+import Carousel from './Carousel'
+import Modal from './Modal'
 
 const photoOverlay = (isHovered, xPosition, yPosition) => css`
   position: absolute;
@@ -35,10 +38,20 @@ const projectItem = (isHovered) => css`
   text-shadow: ${isHovered ? '-2px -1px 0 pink' : 'none'};
 `;
 
+const wrapperBtn = css`
+  :hover {
+    cursor: pointer;
+  }
+  width: 20px;
+  height: auto;
+  text-decoration: none;
+  color: black;
+  font-weight: unset;
+`
+
 const sectionWrapper = css`
   align-items: center;
   justify-content: center;
-  margin-top: 10rem;
 `;
 
 const archiveList = css`
@@ -49,6 +62,9 @@ const archiveList = css`
 `;
 
 const Archive = memo(props => {
+  const [showDialog, setShowDialog] = React.useState(false);
+  const open = () => setShowDialog(true);
+  const close = () => setShowDialog(false);
   const [isHovered, handleHover] = useState(false);
   const [xPosition, setXPosition] = useState(0);
   const [yPosition, setYPosition] = useState(0);
@@ -70,27 +86,30 @@ const Archive = memo(props => {
   // https://kentcdodds.com/blog/usememo-and-usecallback
   return (
     <div className={archiveWrapper}>
-      <LinkButton href={'/'} name={'Home'}/>
+      <LinkButton href={'/'} name={'<-'}/>
       <section className={sectionWrapper} >
         {
-          props.archiveData ? props.archiveData.map((a, index) => {
+          !showDialog && props.archiveData ? props.archiveData.map((a, index) => {
             // const titleWithoutSpaces = a.title.replace(/\s+/g, '');                           USE REACH UI MODAL
-              return (
-                <li className={archiveList} key={index} >
-                  <LinkButton
-                    href={`archive/[id]`}
-                    as={`archive/${a.id}`}
-                    name={a.title}
+            return (
+              <li className={archiveList} key={index} >
+                  <a 
+                    onClick={open}
                     className={projectItem(isHovered)}
                     onMouseMove={(e) => mouseMovement(e)}
                     onMouseEnter={() => onHover(index, true)}
-                    onMouseLeave={() => onHover(index, false)}/>
-                  {currentPos === index // a.image
+                    onMouseLeave={() => onHover(index, false)}> 
+                      {a.title}
+                    </a>
+                    {currentPos === index // a.image
                     ? <img src={a.image} alt="" className={photoOverlay(isHovered, xPosition, yPosition)} /> : null
                   }
                 </li>
               )
-          }) : []
+                }) : 
+                <Modal show={showDialog}> 
+                  <Carousel currentPos={currentPos} archiveData={props.archiveData} closeModal={close} />
+                </Modal>
         }
       </section>
     </div>

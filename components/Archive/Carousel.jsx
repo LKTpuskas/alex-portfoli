@@ -37,27 +37,26 @@ const archiveWrapper = css`
   width: 100vw;
 `;
 
+const scrollButton = css`
+  height: 10px;
+  width: 10px;
+  background-color: green;
+`
+
+const closeBtn = css`
+  text-align: right;
+  margin: 0 1rem;
+`
+
 class Carousel extends React.Component {
   debugger
   state = {
-    currentImageIndex: 0 || Number(this.props.router.query.id) - 1,
+    currentImageIndex: this.props.currentPos || 0,
     isFaded: true,
     isNextPrevious: false
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const nextIndex = Number(nextProps.router.query.id)
-    console.log('nextIndex', nextIndex)
-    console.log('nextIndex', nextIndex, prevState.currentImageIndex)
-    if (nextIndex !== this.props.router) {
-      return {
-        currentImageIndex: nextIndex,
-
-      };
-    }
-   }
-
-  setIsFaded = (funcType) => {
+  setIsFaded = funcType => {
     this.setState({ isFaded: false }, funcType)
   }
 
@@ -81,9 +80,7 @@ class Carousel extends React.Component {
     const lastIndex = this.props.archiveData.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === lastIndex;
-    debugger
     const index = shouldResetIndex ? 0 : currentImageIndex + 1;
-    console.log('next index', index)
     this.setState({
       currentImageIndex: index,
       isNextPrevious: true,
@@ -95,23 +92,18 @@ class Carousel extends React.Component {
     }), 800) */
   }
 
-  render() {
-    //console.log(this.props.router)
-    const { archiveData, router } = this.props
-    const { currentImageIndex, isFaded } = this.state;
-    console.log(currentImageIndex)
-    // const queryIndex = router.query ? Number(router.query.id) - 1 : null
 
-   
-      const selectedImage = currentImageIndex && archiveData[currentImageIndex];
-  
-    const refId = '[id]';
-    const refIdAs = `${String(selectedImage.id)}`;
-    // const hrefIdAs = selectedImage && `gallery?id=${selectedImage.id}`
+
+  render() {
+    const { archiveData, closeModal } = this.props
+    const { currentImageIndex, isFaded } = this.state;
+
+    const selectedImage = archiveData[currentImageIndex];
     return !isNaN(currentImageIndex) ? <div className={archiveWrapper}>
-    <LinkButton href={'/archive'} name={'Back to Archive'}/>
+    <h3 className={closeBtn} onClick={closeModal}>X</h3>
     <div className={flexRowWrapper}>
-      <LinkButton
+      <a
+        className={scrollButton}
         name={'Previous'}
         onClick={() => this.setIsFaded(this.previousSlide)}/>
       <CSSTransition
@@ -129,13 +121,12 @@ class Carousel extends React.Component {
       >
         <ImageSlide currentIndex={currentImageIndex} images={archiveData} selectedImage={selectedImage} opacity={isFaded} />
       </CSSTransition>
-      <LinkButton
+      <a
+        className={scrollButton}
         name={'Next'}
         onClick={() => this.setIsFaded(this.nextSlide)}/>
     </div>
-  </div> : <div>LOADING</div> /* (
-      
-    ); */
+  </div> : <div>LOADING</div>
   }
 }
 
