@@ -101,7 +101,7 @@ const Archive = memo(props => {
                     onMouseLeave={() => onHover(index, false)}> 
                       {a.title}
                     </a>
-                    {currentPos === index // a.image
+                    {currentPos === index
                     ? <img src={a.image} alt="" className={photoOverlay(isHovered, xPosition, yPosition)} /> : null
                   }
                 </li>

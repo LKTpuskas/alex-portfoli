@@ -27,7 +27,6 @@ const flexRowWrapper = css`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 3rem;
 `
 
 const archiveWrapper = css`
@@ -41,15 +40,16 @@ const scrollButton = css`
   height: 10px;
   width: 10px;
   background-color: green;
+  margin: inherit;
+  padding: 2%;
 `
 
 const closeBtn = css`
   text-align: right;
-  margin: 0 1rem;
+  margin: 2rem 2rem;
 `
 
 class Carousel extends React.Component {
-  debugger
   state = {
     currentImageIndex: this.props.currentPos || 0,
     isFaded: true,

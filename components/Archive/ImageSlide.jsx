@@ -26,6 +26,7 @@ const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0rem 28rem;
     width: 100%; 
     height: 100%; 
   `
@@ -51,7 +52,6 @@ const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
   const imageExist = selectedImage && selectedImage.image;
   const nextImageRight = images[getRightImageIndex(images, currentIndex)]
   const nextImageLeft = selectedImage.length - 1;
-  debugger;
   return imageExist ? (
     <div className={imageWrapper}>
       <img className={leftStyle} src={imageExist} />

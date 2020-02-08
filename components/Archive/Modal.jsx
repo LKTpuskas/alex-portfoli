@@ -5,6 +5,9 @@ import { css } from 'emotion';
 const modalCss = css`
   position: fixed;
   top: 0;
+  left: 0;
+  overflow: hidden;
+  background: white;
 `
 
 export default function Modal({ show, children }) {
@@ -19,7 +22,7 @@ export default function Modal({ show, children }) {
     <>
      {transitions.map(
         ({ item, key, props: styles }, keyid) => {
-          const labelId = `label--${key}`
+          const labelId = `label--${keyid}`
           return item && (
             <AnimatedDialogOverlay className={modalCss} style={{ opacity: styles.opacity }}>
               <AnimatedDialogContent
@@ -28,8 +31,7 @@ export default function Modal({ show, children }) {
                   transform: styles.y.interpolate(
                     value => `translate3d(0px, ${value}px, 0px)`
                   ),
-                  border: "4px solid hsla(0, 0%, 0%, 0.5)",
-                  borderRadius: 10
+                  outline: 'none'
                 }}
               >
               
