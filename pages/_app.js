@@ -1,14 +1,13 @@
 import App from 'next/app';
-import fetch from 'isomorphic-unfetch'
 
 import Page from '../components/Page';
 import ModalContent from '../components/Overlay/ModalContent';
-import Overlay from '../components/Overlay/Overlay';
-import LandingPage from '../components/Overlay/LandingPage';
+/* import Overlay from '../components/Overlay/Overlay';
+import LandingPage from '../components/Overlay/LandingPage'; */
 import Spinner from '../components/Spinner';
 import { css, injectGlobal } from 'emotion';
-import { bulkData } from './data';
-import Error from 'next/error'
+import { bulkData } from '../components/data';
+/* import Error from 'next/error' */
 // import fetch from 'isomorphic-unfetch'
 
 import { PageTransition } from 'next-page-transitions'

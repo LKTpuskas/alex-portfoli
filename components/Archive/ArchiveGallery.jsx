@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { css } from 'emotion';
-import { withRouter } from 'next/router'
+import { withRouter, useRouter } from 'next/router'
 import classNames from 'classnames';
 import Carousel from './Carousel';
 import LinkButton from '../LinkButton';
@@ -34,6 +34,7 @@ const ArchiveGallery = withRouter(props => {
     handleHover(hovered)
     handlePosition(index)
   }
+  
   return (
     <div className={archiveWrapper}>
       <LinkButton href={'/archive'} name={'Back to Archive'}/>
@@ -41,5 +42,9 @@ const ArchiveGallery = withRouter(props => {
     </div>
   )
 })
+
+ArchiveGallery.getInitialProps = async () => {
+  return {};
+};
 
 export default ArchiveGallery;

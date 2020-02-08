@@ -18,17 +18,17 @@ archiveData: [
   { 
     id: 2,
     title: 'nagakawa',
-    image: '/IMG_9688.JPG'
+    image: '/IMG_9689.JPG'
   },
   { 
     id: 3,
     title: 'itsu',
-    image: '/IMG_9689.JPG'
+    image: '/IMG_9688.JPG' 
   },
   { 
     id: 4,
     title: 'yakonomo',
-    image: '/IMG_9690.JP'
+    image: '/IMG_9690.JPG'
   },
   { 
     id: 5,

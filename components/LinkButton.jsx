@@ -15,8 +15,8 @@ const styledLink = css`
 `
 const styleCheck = (specificStyle, defaultStyle) => specificStyle !== undefined ? classNames(defaultStyle, specificStyle) : defaultStyle;
 
-export default ({ href, name, onClick, className, onMouseMove, onMouseEnter, onMouseLeave }) => (
-  <Link href={href} passHref>
+export default ({ href, as, name, onClick, className, onMouseMove, onMouseEnter, onMouseLeave }) => (
+  <Link href={href} as={as} passHref>
     <a
       className={styleCheck(className, styledLink)}
       onClick={onClick}

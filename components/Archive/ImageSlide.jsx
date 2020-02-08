@@ -16,7 +16,6 @@ function getRandomInt(min, max) {
 
 const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
   React.useEffect(() => {
-    console.log('image did mount');
     getRightImageIndex(images, currentIndex)
   },[])
 
@@ -27,6 +26,7 @@ const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0rem 28rem;
     width: 100%; 
     height: 100%; 
   `

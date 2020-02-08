@@ -7,7 +7,6 @@ export const mainNav = css`
   text-decoration: none;
   list-style-type: none;
   a {
-    display: block;
     text-align: center;
     margin: 10px;
     padding: 15px;

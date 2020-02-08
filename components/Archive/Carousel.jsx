@@ -27,72 +27,106 @@ const flexRowWrapper = css`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 3rem;
+`
+
+const archiveWrapper = css`
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+`;
+
+const scrollButton = css`
+  height: 10px;
+  width: 10px;
+  background-color: green;
+  margin: inherit;
+  padding: 2%;
+`
+
+const closeBtn = css`
+  text-align: right;
+  margin: 2rem 2rem;
 `
 
 class Carousel extends React.Component {
   state = {
-    currentImageIndex: 0 || this.props.images.findIndex(image => this.props.router.query.id === String(image.id)),
-    isFaded: true
+    currentImageIndex: this.props.currentPos || 0,
+    isFaded: true,
+    isNextPrevious: false
   };
 
-  setIsFaded = (funcType) => {
+  setIsFaded = funcType => {
     this.setState({ isFaded: false }, funcType)
   }
 
   previousSlide = () => {
-    const lastIndex = this.props.images.length - 1;
+    const lastIndex = this.props.archiveData.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === 0;
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
-    setTimeout(() => this.setState({
+    /* setTimeout(() => this.setState({
       currentImageIndex: index,
       isFaded: true
-    }), 800)
+    }), 800) */
+    this.setState({
+      currentImageIndex: index,
+      isFaded: true,
+      sNextPrevious: true,
+    })
   }
 
   nextSlide = () => {
-    const lastIndex = this.props.images.length - 1;
+    const lastIndex = this.props.archiveData.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === lastIndex;
     const index = shouldResetIndex ? 0 : currentImageIndex + 1;
-    setTimeout(() => this.setState({
+    this.setState({
+      currentImageIndex: index,
+      isNextPrevious: true,
+      isFaded: true
+    })
+   /*  setTimeout(() => this.setState({
       currentImageIndex: index,
       isFaded: true
-    }), 800)
+    }), 800) */
   }
 
+
+
   render() {
+    const { archiveData, closeModal } = this.props
     const { currentImageIndex, isFaded } = this.state;
-    const selectedImage = this.props.images[currentImageIndex];
-    const hrefId = `gallery?id=${selectedImage.id}`;
-    return (
-      <div className={flexRowWrapper}>
-        <LinkButton
-          href={hrefId}
-          name={'Previous'}
-          onClick={() => this.setIsFaded(this.previousSlide)}/>
-        <CSSTransition
-          in={isFaded}
-          timeout={800}
-          classNames={{
-            enter: imageEnter,
-            enterActive: imageEnterActive,
-            exit: imageExit,
-            exitActive: imageExitActive,
-            exitDone: imageExitDone
-          }}
-          unmountOnExit
-          appear
-        >
-          <ImageSlide currentIndex={currentImageIndex} images={this.props.images} selectedImage={selectedImage} opacity={isFaded} />
-        </CSSTransition>
-        <LinkButton
-          href={hrefId}
-          name={'Next'}
-          onClick={() => this.setIsFaded(this.nextSlide)}/>
-      </div>
-    );
+
+    const selectedImage = archiveData[currentImageIndex];
+    return !isNaN(currentImageIndex) ? <div className={archiveWrapper}>
+    <h3 className={closeBtn} onClick={closeModal}>X</h3>
+    <div className={flexRowWrapper}>
+      <a
+        className={scrollButton}
+        name={'Previous'}
+        onClick={() => this.setIsFaded(this.previousSlide)}/>
+      <CSSTransition
+        in={isFaded}
+        timeout={800}
+        classNames={{
+          enter: imageEnter,
+          enterActive: imageEnterActive,
+          exit: imageExit,
+          exitActive: imageExitActive,
+          exitDone: imageExitDone
+        }}
+        unmountOnExit
+        appear
+      >
+        <ImageSlide currentIndex={currentImageIndex} images={archiveData} selectedImage={selectedImage} opacity={isFaded} />
+      </CSSTransition>
+      <a
+        className={scrollButton}
+        name={'Next'}
+        onClick={() => this.setIsFaded(this.nextSlide)}/>
+    </div>
+  </div> : <div>LOADING</div>
   }
 }
 
