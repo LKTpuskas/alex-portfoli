@@ -10,7 +10,6 @@ export const Body = css`
   overflow: hidden;
   min-height: 100vh;
   min-width: 100vw;
-  font-family: nivea;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
   -ms-font-smoothing: antialiased;

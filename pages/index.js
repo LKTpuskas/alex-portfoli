@@ -9,12 +9,13 @@ if (typeof window !== 'undefined') {
 }
 
 injectGlobal`
-    @font-face {
-    font-family: nivea;
+/*     @font-face {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
+  Helvetica, Arial, "Lucida Grande", sans-serif;
     src: url('/static/nivea.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-    }
+    } */
     *,
     *::after,
     *::before {
@@ -63,7 +64,8 @@ injectGlobal`
 `;
 
 const basicStyle = css`
-  font-family: nivea;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
+  Helvetica, Arial, "Lucida Grande", sans-serif;
   background-color: white;
 `;
 // default route : localhost/...

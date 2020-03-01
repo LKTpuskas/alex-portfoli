@@ -5,13 +5,13 @@ const Nav = () => (
   <>
     <ul className={mainNav} >
       <li>
-        <LinkButton href={'/about'} name={'About'} className={navLinks} />
+        <LinkButton href={'/about'} name={'Contact'} className={navLinks} />
       </li>
       <li>
-        <LinkButton href={'/archive'} name={'Archive'} className={navLinks} />
+        <LinkButton href={'/archive'} name={'ALEXANDERHANA'} className={navLinks} />
       </li>
       <li>
-        <LinkButton href={'/prints'} name={'Prints'} className={navLinks} />
+        <LinkButton href={'/prints'} name={'Instagram'} className={navLinks} />
       </li>
     </ul>
   </>

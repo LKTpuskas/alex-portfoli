@@ -5,20 +5,19 @@ import { css } from 'emotion';
 import LinkButton from '../LinkButton';
 import Carousel from './Carousel'
 import Modal from './Modal'
+import Nav from '../Home/Nav';
 
-const photoOverlay = (isHovered, xPosition, yPosition) => css`
-  position: absolute;
+const photoOverlay = (isHovered) => css`
+  position: fixed;
   width: 300px;
   height: auto;
-  left: ${xPosition}px;
-  top: ${yPosition}px;
   transition-duration: 400ms;
   transition-timing-function: ease-out;
   background-color: rgba(0, 0, 0, 0.7);
   opacity: ${isHovered ? 1 : 0};
   filter: ${isHovered ? 'grayscale(40%)' : 'grayscale(0%)'};
   transition: opacity 0.3s;
-  z-index: 2;
+  z-index: 1;
 `;
 
 const archiveWrapper = css`
@@ -35,7 +34,6 @@ const projectItem = (isHovered) => css`
   align-items: center;
   justify-content: center;
   transition: opacity 0.5s;
-  text-shadow: ${isHovered ? '-2px -1px 0 pink' : 'none'};
 `;
 
 const wrapperBtn = css`
@@ -50,15 +48,19 @@ const wrapperBtn = css`
 `
 
 const sectionWrapper = css`
+  padding: 16rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 `;
 
 const archiveList = css`
-  font-family: 5rem;
   color: black;
   letter-spacing: 8px;
   text-align: center;
+  z-index: 2;
 `;
 
 const Archive = memo(props => {
@@ -92,6 +94,7 @@ const Archive = memo(props => {
           !showDialog && props.archiveData ? props.archiveData.map((a, index) => {
             // const titleWithoutSpaces = a.title.replace(/\s+/g, '');                           USE REACH UI MODAL
             return (
+              <>
               <li className={archiveList} key={index} >
                   <a 
                     onClick={open}
@@ -101,10 +104,11 @@ const Archive = memo(props => {
                     onMouseLeave={() => onHover(index, false)}> 
                       {a.title}
                     </a>
-                    {currentPos === index
-                    ? <img src={a.image} alt="" className={photoOverlay(isHovered, xPosition, yPosition)} /> : null
-                  }
                 </li>
+                    {currentPos === index
+                    ? <img src={a.image} alt="" className={photoOverlay(isHovered)} /> : null
+                  }
+                  </>
               )
                 }) : 
                 <Modal show={showDialog}> 
@@ -112,6 +116,7 @@ const Archive = memo(props => {
                 </Modal>
         }
       </section>
+      <Nav/>
     </div>
   )
 })
