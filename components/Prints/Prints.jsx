@@ -1,59 +1,67 @@
+import { useState } from 'react';
 import { css } from 'emotion';
-import LinkButton from '../LinkButton';
+import Router from 'next/router'
 
-const container = css`
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 1rem;
-`
+const image = css`
+width: 100%;
+height: auto;
+`;
 
-const grid = css`
-  @media screen and (min-width: 600px) {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
+const imageWrapper = css`
+max-width: 80px;
+padding: 3px;
+margin-bottom: 17px;
+`;
+
+const projectItem = css`      
+margin: 0 auto;
+display: flex;
+flex-wrap: wrap;
+`;
+
+const projectTitle = css`
+color: pink;
+ position: fixed;
+`;
+
+function getImage(project, closeModal) {
+
+  const onSetCurrentItem = (imageIndex) => {
+    Router.push(`/[projectName]/[projectImage]`, `/${project.title}/${imageIndex}`);
+    closeModal();
   }
-`
 
-const cell = css`
-  margin: 1rem;
-  li img {
-    display: block;
-  }
-  @media screen and (min-width: 600px) {
-    width: calc(25% - 2rem);
-  }
-
-  @media screen and (min-width: 1000px) {
-    width: calc(20% - 2rem);
-  }
-
-  @media screen and (min-width: 1300px) {
-    width: calc(25% - 2rem);
-  }
-`
-
-const responsiveImage = css`
-  max-width: 100%;
-`
-
-const Prints = props => {
-  return (
-    <div className={container}>
-      <LinkButton href={'/'} name={'Home'}/>
-      <div className={grid} >
-        {
-          props.printsData.map((imgObject, index) => {
-            return (
-              <li className={cell} key={index} >
-                <img className={responsiveImage} src={imgObject.image} alt="" />
-                <p>{imgObject.info}</p>
-              </li>
-            )
-          })
-        }
+  return <>
+    {project.images.map((img, imageIndex) => {
+      return <div key={imageIndex} className={imageWrapper} onClick={() => onSetCurrentItem(imageIndex)}>
+            <img className={image} src={img.url} alt="" /> 
       </div>
-    </div>
+    })}
+  </>
+}
+
+function Prints({ children: { props: { projectData } }, closeModal }) {
+
+  return (
+    <>
+      {
+        projectData.map((project, index) => {
+          return (
+            <div className={projectItem} key={index} >
+              {getImage(project, closeModal)}
+              {/* <ul>
+                    {project.images.map((project, index) => {
+                    return <li key={index}>
+                      <img className={image} src={project.url} alt="" />
+                      </li> 
+                    })}
+                  </ul> */}
+              <h2 className={projectTitle}>{project.title}</h2>
+            </div>
+          )
+        })
+      }
+    </>
   )
 }
 

@@ -14,21 +14,22 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
-  React.useEffect(() => {
-    getRightImageIndex(images, currentIndex)
-  },[])
+const ImageSlide = ({ selectedImage, currentIndex, opacity }) => {
 
-  const imageWrapper = css`
+  const imageWrapper = (isHorizontal) => css`
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0rem 28rem;
+    margin: ${isHorizontal ? `150px 0` : `0 10px`};
+    padding: 10px;
     width: 100%; 
     height: 100%; 
+    @media (min-width: 1020px) {
+      
+    }
   `
 
   const leftStyle = css`
@@ -36,8 +37,7 @@ const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
     height: auto;
     opacity: 1;
     transition: all 2s ease-in-out;
-    transform: perspective(500px) translateZ(-200px) rotateY(${getRandomInt(178, 185)}deg);
-    float: left;
+  
   `;
 
   const rightStyle = css`
@@ -49,15 +49,15 @@ const ImageSlide = ({ selectedImage, images, currentIndex, opacity }) => {
     float: left;
   `;
 
-  const imageExist = selectedImage && selectedImage.image;
-  const nextImageRight = images[getRightImageIndex(images, currentIndex)]
-  const nextImageLeft = selectedImage.length - 1;
-  return imageExist ? (
-    <div className={imageWrapper}>
-      <img className={leftStyle} src={imageExist} />
-      <img className={rightStyle} src={nextImageRight.image} />
+  // const imageExist = selectedImage && selectedImage.image;
+  // const nextImageRight = images[getRightImageIndex(images, currentIndex)]
+  // const nextImageLeft = selectedImage.length - 1;
+  return selectedImage ? (
+    <div className={imageWrapper(selectedImage.isHorizontal)}>
+      <img className={leftStyle} src={selectedImage.url} />
+     {/*  <img className={rightStyle} src={nextImageRight.image} /> */}
     </div>
-  ) : 'NO IMAGES';
+  ) : null
 }
 
 export default ImageSlide;

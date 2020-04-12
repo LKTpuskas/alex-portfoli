@@ -1,8 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 
 import { css } from 'emotion';
-import Nav from './Nav';
-import HomeContent from './HomeContent';
+import Archive from '../Archive/Archive';
 
 const homeContent = css`
   min-height: 100vh;
@@ -11,14 +10,12 @@ const homeContent = css`
   flex-wrap: wrap;
   flex-direction: column;
 `
-class Home extends React.Component {
-  render() {
+const Home = props => {
     return (
       <div className={homeContent} >
-        <HomeContent {...this.props} />
+        <Archive {...props} />
       </div>
     )
-  }
 }
 
 export default Home;

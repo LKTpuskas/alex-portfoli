@@ -9,31 +9,91 @@ export const bulkData = {
 aboutMe: 'Im X and I do Y',
 email: 'alexS@gmail.com',
 phone: '080876534',
-archiveData: [
+projectData: [
   { 
     id: 1,
     title: 'sapporo',
-    image: '/IMG_9687.JPG'
+    description: `
+    This is a project description about sapporo.
+    The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
   },
   { 
     id: 2,
     title: 'nagakawa',
-    image: '/IMG_9689.JPG'
+    description: `
+    This is a project description about
+    nagakawa. The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
   },
   { 
     id: 3,
     title: 'itsu',
-    image: '/IMG_9688.JPG' 
+    description: `
+    This is a project description about
+    itsu. The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
   },
   { 
     id: 4,
     title: 'yakonomo',
-    image: '/IMG_9690.JPG'
+    description: `
+    This is a project description about
+    yakonomo. The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
   },
   { 
     id: 5,
     title: 'tokayo',
-    image: '/IMG_9691.JPG'
+    description: `
+    This is a project description about
+    tokayo. The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
   }
 ],
 printsData: [
@@ -72,6 +132,6 @@ printsData: [
 
 // image.url
 
-// props.archiveData.data
+// props.projectData.data
 
 // props images

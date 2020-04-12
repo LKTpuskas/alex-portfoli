@@ -55,19 +55,19 @@ class MyApp extends App {
     const { fadeOutOverlay, unMountOverlay } = this.state;
     const content = <ModalContent {...bulkData} />;
     const loadComponents = bulkData
-      ? <Page key={router.route}>
+      ? <Page key={router.route} router={router}>
         <Component key={router.route} {...bulkData} />
       </Page> : <Spinner />;
 
     /* {overlayContent} */
-    return (
-        <PageTransition
+    return loadComponents
+        {/* <PageTransition
           skipInitialTransition={true}
           timeout={400}
           classNames="page-transition" >
           {loadComponents}
-        </PageTransition>
-    )
+        </PageTransition> */}
+  
   }
 }
 

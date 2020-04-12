@@ -5,7 +5,6 @@ import Carousel from '../../components/Archive/Carousel';
 const GalleryPage = props => {
   const router = useRouter();
 
-  console.log(router.query)
   return <Carousel {...props} router={router}/>
 }
 

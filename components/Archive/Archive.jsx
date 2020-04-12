@@ -1,12 +1,22 @@
-import { useState, useMemo, useCallback, memo } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
+import { useIntersection } from 'react-use';
+import { useRouter } from 'next/router';
+
 import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
-import { debounce } from 'lodash';
+
 import { css } from 'emotion';
 import LinkButton from '../LinkButton';
-import Carousel from './Carousel'
 import Modal from './Modal'
-import Nav from '../Home/Nav';
 
+
+// https://streamich.github.io/react-use/?path=/story/sensors-useintersection--docs
+
+
+
+// small mobile 
+// mobile 420px
+// tablet 768px
+// desktop 1024px
 const photoOverlay = (isHovered) => css`
   position: fixed;
   width: 300px;
@@ -28,40 +38,53 @@ const archiveWrapper = css`
 `;
 
 const projectItem = (isHovered) => css`
-  font-size: 5rem;
+  font-size: 3.5rem;
   color: black;
   letter-spacing: 8px;
   align-items: center;
   justify-content: center;
   transition: opacity 0.5s;
+  @media (min-width: 734px) {
+        font-size: 75px;
+      }
 `;
 
-const wrapperBtn = css`
-  :hover {
-    cursor: pointer;
-  }
-  width: 20px;
-  height: auto;
-  text-decoration: none;
-  color: black;
-  font-weight: unset;
-`
-
-const sectionWrapper = css`
-  padding: 16rem;
+//   margin-top: 100px; 
+const ulWrapper = css`
+  font-size: 75px;
+  margin-top: 100px; 
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  
+  @media (min-width: 1020px) {
+    flex-direction: row;
+    margin-top: 200px;
+  }
+  @media (max-width: 321px) {
+    font-size: initial;
+  }
+
 `;
 
+
+//   opacity: 1;
+ // display: inherit;
 const archiveList = css`
   color: black;
   letter-spacing: 8px;
   text-align: center;
   z-index: 2;
 `;
+
+function concatComma(str, index, array, width) {
+  const MaxWidth = 800
+  const lastIndex = array.length - 1;
+  const isMobileLayout = width < MaxWidth
+  return index === lastIndex || isMobileLayout ? str : str.concat(',') 
+}
 
 const Archive = memo(props => {
   const [showDialog, setShowDialog] = React.useState(false);
@@ -71,11 +94,17 @@ const Archive = memo(props => {
   const [xPosition, setXPosition] = useState(0);
   const [yPosition, setYPosition] = useState(0);
   const [currentPos, handlePosition] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(0);
+  const router = useRouter();
+  useEffect(() => {
+    setWindowWidth(window.innerWidth)
+  }, [windowWidth])
+
   const onHover = (index, hovered) => {
     handleHover(hovered)
     handlePosition(index)
   }
-  // const projectExists = props.archiveData && props.archiveData.data;
+  // const projectExists = props.projectData && props.projectData.data;
 
   const mouseMovement = (event) => {
     //console.log('horizontal', event.clientX)
@@ -88,37 +117,50 @@ const Archive = memo(props => {
   // https://kentcdodds.com/blog/usememo-and-usecallback
   return (
     <div className={archiveWrapper}>
-      <LinkButton href={'/'} name={'<-'}/>
-      <section className={sectionWrapper} >
+      <ul className={ulWrapper} >
         {
-          !showDialog && props.archiveData ? props.archiveData.map((a, index) => {
+          !showDialog && props.projectData && props.projectData.map((item, index, array) => {
             // const titleWithoutSpaces = a.title.replace(/\s+/g, '');                           USE REACH UI MODAL
             return (
-              <>
+              <React.Fragment key={index}>
               <li className={archiveList} key={index} >
-                  <a 
+                  <LinkButton 
+                    href={`/[projectName]/[projectImage]`}
+                    as={`/${item.title}/${0}`}
+                    name={concatComma(item.title, index, array, windowWidth)}
+                    onClick={open}
+                    className={projectItem(isHovered)}
+                    onMouseMove={(e) => mouseMovement(e)}
+                    onMouseEnter={() => onHover(index, true)}
+                    onMouseLeave={() => onHover(index, false)} /> 
+                {/*   <a 
                     onClick={open}
                     className={projectItem(isHovered)}
                     onMouseMove={(e) => mouseMovement(e)}
                     onMouseEnter={() => onHover(index, true)}
                     onMouseLeave={() => onHover(index, false)}> 
-                      {a.title}
-                    </a>
+                      {concatComma(item.title, index, array, windowWidth)}
+                    </a> */}
                 </li>
                     {currentPos === index
-                    ? <img src={a.image} alt="" className={photoOverlay(isHovered)} /> : null
+                    ? <img src={item.images && item.images[0].url} alt="" className={photoOverlay(isHovered)} /> : null
                   }
-                  </>
+              </React.Fragment>
               )
-                }) : 
-                <Modal show={showDialog}> 
-                  <Carousel currentPos={currentPos} archiveData={props.archiveData} closeModal={close} />
-                </Modal>
+            }) 
+                /* <Modal show={showDialog}> 
+                  <Carousel currentPos={currentPos} projectData={props.projectData} closeModal={close} />
+                </Modal> */
         }
-      </section>
-      <Nav/>
+      </ul>      
     </div>
   )
 })
 
 export default Archive;
+
+// margin: 0;
+/* margin-block-end: 0; */
+/* margin-block-start: 0; */
+// max-width: 25vw;
+// margin: 0 auto;

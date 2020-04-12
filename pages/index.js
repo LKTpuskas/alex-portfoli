@@ -32,6 +32,7 @@ injectGlobal`
       font-size: 100%;
       min-height: 100%;
       position: relative;
+      margin: 0;
     }
     ul {
       list-style-type: none;
@@ -57,9 +58,8 @@ injectGlobal`
       font-size: 2vmin;
     }
     img {
-      max-height: 1200px;
-      min-height: 200px;
-      max-width: 600px;
+      width: 100%;
+      height: auto;
     }
 `;
 

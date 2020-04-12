@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef, useState, useEffect }  from 'react';
 import ImageSlide from './ImageSlide';
 import Link from 'next/link';
 import Arrow from './Archive';
 import { css } from 'emotion';
 import { CSSTransition } from 'react-transition-group';
 import LinkButton from '../LinkButton';
+import Router from 'next/router'
+import { useSwipeable, Swipeable } from 'react-swipeable';
 
 const imageEnter = css`
   opacity: 0;
@@ -23,13 +25,16 @@ const imageExitActive = css`
 const imageExitDone = css`
   background-color: blue;
 `
+//  flex-direction row on desktop
 const flexRowWrapper = css`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  margin-top: 10px;
 `
 
 const archiveWrapper = css`
+  
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -37,11 +42,10 @@ const archiveWrapper = css`
 `;
 
 const scrollButton = css`
-  height: 10px;
-  width: 10px;
-  background-color: green;
-  margin: inherit;
-  padding: 2%;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  float: left;
 `
 
 const closeBtn = css`
@@ -49,64 +53,85 @@ const closeBtn = css`
   margin: 2rem 2rem;
 `
 
-class Carousel extends React.Component {
-  state = {
-    currentImageIndex: this.props.currentPos || 0,
-    isFaded: true,
-    isNextPrevious: false
-  };
+const cursorBackground = (isMobile) => css`
+  position: ${isMobile ? 'relative' : 'absolute' };
+  z-index: 100;
+  height: ${isMobile ? 'initial' : '10px'};
+  width: ${isMobile ? 'initial' : '10px'};
+`
 
-  setIsFaded = funcType => {
-    this.setState({ isFaded: false }, funcType)
-  }
+const scrollButtonWrapper = css`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
 
-  previousSlide = () => {
-    const lastIndex = this.props.archiveData.length - 1;
-    const { currentImageIndex } = this.state;
+function Carousel(props) {
+  const cursorContent = useRef(null);
+  const [isFaded, setIsFaded] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(props.projectImageIndex);
+  const [isNextPrevious, setIsNextPrevious] = useState(false);
+  
+
+
+  useEffect(() => {
+    setCurrentImageIndex(props.projectImageIndex)
+  }, [props.projectImageIndex]);
+
+  const projectName = props.project && props.project.title;
+
+  const previousSlide = () => {
+    const lastIndex = props.project.images.length - 1;
     const shouldResetIndex = currentImageIndex === 0;
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
     /* setTimeout(() => this.setState({
       currentImageIndex: index,
       isFaded: true
     }), 800) */
-    this.setState({
-      currentImageIndex: index,
-      isFaded: true,
-      sNextPrevious: true,
-    })
+    setCurrentImageIndex(index)
+    setIsNextPrevious(true)
+    Router.push(`/[projectName]/[projectImage]`, `/${projectName}/${index}`)
   }
 
-  nextSlide = () => {
-    const lastIndex = this.props.archiveData.length - 1;
-    const { currentImageIndex } = this.state;
+  const nextSlide = () => {
+    const lastIndex = props.project.images.length - 1;
     const shouldResetIndex = currentImageIndex === lastIndex;
     const index = shouldResetIndex ? 0 : currentImageIndex + 1;
-    this.setState({
+    
+    setCurrentImageIndex(index)
+    setIsNextPrevious(true)
+    Router.push(`/[projectName]/[projectImage]`, `/${projectName}/${index}`)
+    /* this.setState({
       currentImageIndex: index,
       isNextPrevious: true,
       isFaded: true
-    })
-   /*  setTimeout(() => this.setState({
-      currentImageIndex: index,
-      isFaded: true
-    }), 800) */
+    }) */
   }
 
+  const move = (e) => {
+  const x = e.pageX - 40;
+  const y = e.pageY;
+  const cursor = cursorContent.current
 
+  cursor.style.left = x + 'px'
+  cursor.style.top = y + 'px'
+}
 
-  render() {
-    const { archiveData, closeModal } = this.props
-    const { currentImageIndex, isFaded } = this.state;
-
-    const selectedImage = archiveData[currentImageIndex];
-    return !isNaN(currentImageIndex) ? <div className={archiveWrapper}>
-    <h3 className={closeBtn} onClick={closeModal}>X</h3>
-    <div className={flexRowWrapper}>
-      <a
-        className={scrollButton}
-        name={'Previous'}
-        onClick={() => this.setIsFaded(this.previousSlide)}/>
-      <CSSTransition
+  const { project } = props    
+  const selectedImage = project && project.images[currentImageIndex];
+   
+  const handlers = useSwipeable({
+    onSwipedLeft: () => previousSlide(),
+    onSwipedRight: () => nextSlide(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  });
+  return !isNaN(currentImageIndex) && <div className={archiveWrapper} onMouseMove={move}>
+    <div {...handlers} className={flexRowWrapper}>
+{/*       <div className={cursorBackground(props.isMobile)} ref={cursorContent}>{`Overview`}</div>*/}
+    
+    <div className={cursorBackground(props.isMobile)} ref={cursorContent}>{`Overview${currentImageIndex}/${project && project.images.length - 1}`}</div> 
+      {/* <CSSTransition
         in={isFaded}
         timeout={800}
         classNames={{
@@ -118,16 +143,28 @@ class Carousel extends React.Component {
         }}
         unmountOnExit
         appear
-      >
-        <ImageSlide currentIndex={currentImageIndex} images={archiveData} selectedImage={selectedImage} opacity={isFaded} />
-      </CSSTransition>
-      <a
+        >
+        <ImageSlide currentIndex={currentImageIndex} selectedImage={selectedImage} opacity={isFaded} />
+      </CSSTransition> */}
+    
+        <ImageSlide 
+          currentIndex={currentImageIndex} 
+          selectedImage={selectedImage} 
+          opacity={isFaded} 
+          />
+  
+      {/* <div className={scrollButtonWrapper}>
+        <button
+        
         className={scrollButton}
-        name={'Next'}
-        onClick={() => this.setIsFaded(this.nextSlide)}/>
+        onClick={() => setIsFaded(previousSlide)}>Prev</button> 
+        <button
+      
+          className={scrollButton}
+          onClick={() => setIsFaded(nextSlide)}>Next</button>
+      </div> */}
     </div>
-  </div> : <div>LOADING</div>
-  }
-}
+  </div>
+} 
 
 export default Carousel;
