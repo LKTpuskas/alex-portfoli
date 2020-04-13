@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { css } from 'emotion';
 import { withRouter, useRouter } from 'next/router'
 import classNames from 'classnames';
 import Carousel from './Carousel';
 import LinkButton from '../LinkButton';
+import Modal from './Modal'
 
 const photoOverlay = (isHovered) => css`
   position: absolute;
@@ -28,17 +29,21 @@ const archiveList = css`
 `
 
 const ArchiveGallery = withRouter(props => {
-  const [isHovered, handleHover] = useState(false);
-  const [currentPos, handlePosition] = useState(0);
-  const onHover = (index, hovered) => {
-    handleHover(hovered)
-    handlePosition(index)
-  }
-  
+  const [projectImage, setNewRouter] = useState(props.router.query.projectImage)
+  useEffect(() => {
+      setNewRouter(props.router.query.projectImage)
+  },[props.router.query])
+
+const projectName = props.router.query.projectName
+const getProject = props.projectData.find(project => project.title === projectName);
+
   return (
     <div className={archiveWrapper}>
-      <LinkButton href={'/archive'} name={'Back to Archive'}/>
-      <Carousel {...props} images={props.archiveData}/>
+     <Carousel 
+      {...props}  
+      projectImageIndex={Number(projectImage)}
+      project={getProject}
+      />
     </div>
   )
 })

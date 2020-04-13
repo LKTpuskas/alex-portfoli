@@ -32,7 +32,7 @@ export default class MyDocument extends Document {
           <link rel="shortcut icon" href="/static/favicon.png" />
           {/* <link rel="stylesheet" type="text/css" href="/static/nprogress.css" /> */}
         </Head>
-        <body>
+        <body style={{ margin: 0 }}>
           <Main />
           <NextScript />
         </body>

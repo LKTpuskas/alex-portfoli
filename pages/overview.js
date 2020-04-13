@@ -1,7 +1,7 @@
 import Prints from '../components/Prints/Prints'
 
-const PrintsPage = props => (
+const OverviewPage = props => (
   <Prints {...props}/>
 );
 
-export default PrintsPage;
+export default OverviewPage;

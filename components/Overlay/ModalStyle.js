@@ -1,7 +1,6 @@
 import { css } from 'emotion';
 
 export const modalWrapper = css`
-  font-family: nivea;
   display: flex;
   align-items: center;
   justify-content: center;
