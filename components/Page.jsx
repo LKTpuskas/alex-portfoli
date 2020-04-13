@@ -63,6 +63,9 @@ const childrenWithProps = (children, windowWidth, isMobile) => {
 }
 
 function renderPageElements(currentRoute, onMouseMove, isMobile, children, windowWidth) {
+
+  // ADD CUSTOM STYLING WARPPER AROUND CHILDREWITHPROPS FUNCTION 
+
   const routes =  { 
     '/': () => {
       return onMouseMove && !isMobile ? <div className={childrenAnimation(onMouseMove)}>{childrenWithProps(children, windowWidth, isMobile)}</div> 
@@ -76,6 +79,12 @@ function renderPageElements(currentRoute, onMouseMove, isMobile, children, windo
       return childrenWithProps(children, windowWidth, isMobile)
     },
     '/about': () => {
+      return childrenWithProps(children, windowWidth, isMobile)
+    },
+    '/404': () => {
+      return childrenWithProps(children, windowWidth, isMobile)
+    },
+    '/_error': () => {
       return childrenWithProps(children, windowWidth, isMobile)
     }
   }
