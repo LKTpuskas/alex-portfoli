@@ -1,4 +1,3 @@
-import { useState, useRef, useLayoutEffect,useCallback, useMemo } from 'react';
 import { css } from 'emotion';
 import Router from 'next/router'
 
@@ -18,10 +17,15 @@ height: auto;
 margin: 0 auto;
 display: flex;
 flex-wrap: wrap;
+position: relative;
 `;
 
 const projectTitle = css`
  margin: 0;
+ position: absolute;
+ left: 50%;
+ top: 50%;
+ transform: translate(-50%, -50%);
 `;
 
 const titleWrapper = (height) => css`
@@ -49,26 +53,15 @@ function getImage(project, closeModal) {
 }
 
 function Prints({ children: { props: { projectData } }, closeModal }) {
-  const [currentRef, setCurrentRef] = useState(0)
-  const projectsRef = useRef([]);
-
-  useLayoutEffect(() => { // useLayoutEffect is fired synchronously after all DOM mutations. it doesn’t really care whether the browser has painted the DOM changes or not. It triggers the function right after the DOM mutations are computed.
-    projectsRef.current = projectsRef.current.slice(0, projectData.length);
-    setCurrentRef(projectsRef.current)
-  },[projectData])
-
-  
-  const centralizeTitleHeight = (projectRef, index) => useMemo(() => projectRef && projectRef[index].clientHeight / 2);
   return (
     <>
       {
         projectData.map((project, index) => {
           return (
-            <div className={projectItem} key={index} ref={el => projectsRef.current[index] = el}>
+            <div className={projectItem} key={index}>
+              <h2 className={projectTitle}>{project.title}</h2>
               {getImage(project, closeModal)}
-                  <div className={titleWrapper(centralizeTitleHeight(currentRef, index))} >
-                    <h2 className={projectTitle}>{project.title}</h2>
-                  </div>
+              
             </div>
           )
         })
