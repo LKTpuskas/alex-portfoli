@@ -12,10 +12,10 @@ phone: '080876534',
 projectData: [
   { 
     id: 1,
-    title: 'sapporo',
+    title: 'nagakawa',
     description: `
-    This is a project description about sapporo.
-    The description describes
+    This is a project description about
+    nagakawa. The description describes
     what the project is and how it came
     about. Reading it will be optional.
     `,
@@ -29,14 +29,20 @@ projectData: [
   },
   { 
     id: 2,
-    title: 'nagakawa',
+    title: 'sapporo',
     description: `
-    This is a project description about
-    nagakawa. The description describes
+    This is a project description about sapporo.
+    The description describes
     what the project is and how it came
     about. Reading it will be optional.
     `,
     images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9687.JPG', isHorizontal: false },
       { url: '/IMG_9687.JPG', isHorizontal: false },
       { url: '/IMG_9688.JPG', isHorizontal: false },
       { url: '/IMG_9689.JPG', isHorizontal: true },

@@ -10,7 +10,7 @@ import { css } from 'emotion';
 
 const archiveFooter = (isAnimating) => css`
   margin-bottom: 25px;
-  position: absolute;
+  position: relative;
   -webkit-appearance: 0;
   bottom: 0;
   width: 100vw;
@@ -94,7 +94,6 @@ function renderPageElements(currentRoute, onMouseMove, isMobile, children, windo
 
 const descriptionStyle = css`
   height: 100vh;
-  background: blue;
 `;
 
 const descriptionParagraph = css`

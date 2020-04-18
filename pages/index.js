@@ -45,17 +45,11 @@ injectGlobal`
     img[width] {
       max-width: none;
     }
+    h1,h2,h3 {
+
+    }
     svg {
       height: auto;
-    }
-    h1 {
-      font-size: 7.9vw;
-    }
-    h2 {
-      font-size: 6.0vh;
-    }
-    p {
-      font-size: 2vmin;
     }
     img {
       width: 100%;

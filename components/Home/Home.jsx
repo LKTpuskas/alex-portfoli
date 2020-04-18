@@ -4,7 +4,6 @@ import { css } from 'emotion';
 import Archive from '../Archive/Archive';
 
 const homeContent = css`
-  min-height: 100vh;
   display: flex;
   position: relative;
   flex-wrap: wrap;

@@ -33,7 +33,6 @@ const photoOverlay = (isHovered) => css`
 const archiveWrapper = css`
   align-items: center;
   justify-content: center;
-  height: 100vh;
   width: 100vw;
 `;
 
@@ -52,7 +51,7 @@ const projectItem = (isHovered) => css`
 //   margin-top: 100px; 
 const ulWrapper = css`
   font-size: 75px;
-  margin-top: 100px; 
+/*   margin-top: 100px;  */
   display: flex;
   flex-wrap: wrap;
   align-items: center;

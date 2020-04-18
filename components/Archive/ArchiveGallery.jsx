@@ -20,7 +20,6 @@ const photoOverlay = (isHovered) => css`
 const archiveWrapper = css`
   align-items: center;
   justify-content: center;
-  height: 100vh;
   width: 100vw;
 `;
 

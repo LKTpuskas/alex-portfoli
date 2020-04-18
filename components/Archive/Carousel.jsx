@@ -37,7 +37,6 @@ const archiveWrapper = css`
   
   align-items: center;
   justify-content: center;
-  height: 100vh;
   width: 100vw;
 `;
 
@@ -121,8 +120,8 @@ function Carousel(props) {
   const selectedImage = project && project.images[currentImageIndex];
    
   const handlers = useSwipeable({
-    onSwipedLeft: () => previousSlide(),
-    onSwipedRight: () => nextSlide(),
+    onSwipedLeft: () => nextSlide(),
+    onSwipedRight: () => previousSlide(),
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
   });
@@ -130,7 +129,7 @@ function Carousel(props) {
     <div {...handlers} className={flexRowWrapper}>
 {/*       <div className={cursorBackground(props.isMobile)} ref={cursorContent}>{`Overview`}</div>*/}
     
-    <div className={cursorBackground(props.isMobile)} ref={cursorContent}>{`Overview${currentImageIndex}/${project && project.images.length - 1}`}</div> 
+    <div className={cursorBackground(props.isMobile)} ref={cursorContent}>{`${project && project.title} ${currentImageIndex}/${project && project.images.length - 1}`}</div> 
       {/* <CSSTransition
         in={isFaded}
         timeout={800}
