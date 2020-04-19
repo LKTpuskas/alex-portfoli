@@ -80,26 +80,25 @@ function Carousel(props) {
   const projectName = props.project && props.project.title;
 
   const previousSlide = () => {
-    const lastIndex = props.project.images.length - 1;
-    const shouldResetIndex = currentImageIndex === 0;
+    const lastIndex = props.project.images.length;
+    const shouldResetIndex = currentImageIndex === 1;
     const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
-    /* setTimeout(() => this.setState({
-      currentImageIndex: index,
-      isFaded: true
-    }), 800) */
-    setCurrentImageIndex(index)
+
+    const trueIndex = index;
+    setCurrentImageIndex(trueIndex)
     setIsNextPrevious(true)
-    Router.push(`/[projectName]/[projectImage]`, `/${projectName}/${index}`)
+    Router.push(`/[projectName]/[projectImage]`, `/${projectName}/${trueIndex}`)
   }
 
   const nextSlide = () => {
-    const lastIndex = props.project.images.length - 1;
+    const lastIndex = props.project.images.length;
     const shouldResetIndex = currentImageIndex === lastIndex;
-    const index = shouldResetIndex ? 0 : currentImageIndex + 1;
+    const index = shouldResetIndex ? 1 : currentImageIndex + 1;
     
-    setCurrentImageIndex(index)
+    const trueIndex = index;
+    setCurrentImageIndex(trueIndex)
     setIsNextPrevious(true)
-    Router.push(`/[projectName]/[projectImage]`, `/${projectName}/${index}`)
+    Router.push(`/[projectName]/[projectImage]`, `/${projectName}/${trueIndex}`)
     /* this.setState({
       currentImageIndex: index,
       isNextPrevious: true,
@@ -117,7 +116,7 @@ function Carousel(props) {
 }
 
   const { project } = props    
-  const selectedImage = project && project.images[currentImageIndex];
+  const selectedImage = project && project.images[currentImageIndex - 1];
    
   const handlers = useSwipeable({
     onSwipedLeft: () => nextSlide(),
@@ -125,11 +124,11 @@ function Carousel(props) {
     preventDefaultTouchmoveEvent: true,
     trackMouse: true
   });
-  return !isNaN(currentImageIndex) && <div className={archiveWrapper} onMouseMove={move}>
+  return !isNaN(currentImageIndex) && <div className={archiveWrapper} onMouseMove={!props.isMobile ? move : undefined}>
     <div {...handlers} className={flexRowWrapper}>
 {/*       <div className={cursorBackground(props.isMobile)} ref={cursorContent}>{`Overview`}</div>*/}
     
-    <div className={cursorBackground(props.isMobile)} ref={cursorContent}>{`${project && project.title} ${currentImageIndex}/${project && project.images.length - 1}`}</div> 
+    <div className={cursorBackground(props.isMobile)} ref={cursorContent}>{`${project && project.title} ${currentImageIndex}/${project && project.images.length}`}</div> 
       {/* <CSSTransition
         in={isFaded}
         timeout={800}

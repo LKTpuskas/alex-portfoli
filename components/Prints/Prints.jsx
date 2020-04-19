@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { css } from 'emotion';
 import Router from 'next/router'
 
@@ -20,8 +21,9 @@ flex-wrap: wrap;
 position: relative;
 `;
 
-const projectTitle = css`
+const projectTitle = (isHovered) => css`
  margin: 0;
+ font-style: ${isHovered ? 'italic' : 'none'};
  position: absolute;
  left: 50%;
  top: 50%;
@@ -45,23 +47,30 @@ function getImage(project, closeModal) {
 
   return <>
     {project.images.map((img, imageIndex) => {
-      return <div key={imageIndex} className={imageWrapper} onClick={() => onSetCurrentItem(imageIndex)}>
+      const trueIndex = imageIndex + 1
+      return <div key={imageIndex} className={imageWrapper} onClick={() => onSetCurrentItem(trueIndex)}>
             <img className={image} src={img.url} alt="" /> 
       </div>
     })}
   </>
 }
 
-function Prints({ children: { props: { projectData } }, closeModal }) {
+function Prints({ isMobile, children: { props: { projectData } }, closeModal }) {
+  const [currentPos, handlePosition] = useState(null);
+
   return (
     <>
       {
         projectData.map((project, index) => {
+          const isHovered = currentPos === index
           return (
-            <div className={projectItem} key={index}>
-              <h2 className={projectTitle}>{project.title}</h2>
-              {getImage(project, closeModal)}
-              
+            <div 
+              className={projectItem} 
+              key={index}  
+              onMouseEnter={() => !isMobile && handlePosition(index)}
+              onMouseLeave={() => !isMobile && handlePosition(index)}>
+                <h2 className={projectTitle(isHovered)}>{project.title}</h2>
+                {getImage(project, closeModal)}
             </div>
           )
         })

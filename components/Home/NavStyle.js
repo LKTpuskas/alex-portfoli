@@ -3,14 +3,12 @@ import { css } from 'emotion';
 
 // transform: translateY(-100px) scale(4);
 export const mainNav = css`
-  z-index: 10;
   display: flex;
   position: relative;
   justify-content: center;
   text-decoration: none;
   list-style-type: none;
   a {
-    color: blue;
     text-align: center;
     margin: 10px;
     padding: 15px;
@@ -23,6 +21,7 @@ export const navLinks = css`
 `;
 
 export const mainBtn = (isAnimating) => css`
+  font-weight: bold;
 ${isAnimating ? `transform: scale(1);` : `transform: scale(1.5);`};
   transition: 3s;
   transition-timing-function: ease-out;

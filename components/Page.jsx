@@ -10,7 +10,7 @@ import { css } from 'emotion';
 
 const archiveFooter = (isAnimating) => css`
   margin-bottom: 25px;
-  position: relative;
+  position: fixed;
   -webkit-appearance: 0;
   bottom: 0;
   width: 100vw;
@@ -27,7 +27,7 @@ const archiveFooter = (isAnimating) => css`
     
 /* cubic-bezier() values for first example from preceding demo page */
     transition-timing-function: cubic-bezier(.1, .1, .2, .1);
-    ${isAnimating ? `transform: translateY(0px);` : `transform: translateY(-350px);`}
+    ${isAnimating ? `transform: translateY(0px);` : `transform: translateY(0px);`}
    /*  margin-bottom: ${!isAnimating ? '400px' : '100px '}; */
   }
 /*   @media (min-width: 1020px) {
@@ -94,6 +94,7 @@ function renderPageElements(currentRoute, onMouseMove, isMobile, children, windo
 
 const descriptionStyle = css`
   height: 100vh;
+  width: 100vw;
 `;
 
 const descriptionParagraph = css`
@@ -141,6 +142,7 @@ const Page = props => {
       onMouseMove && setTimeout(() => setFirstRender(false), 4000)
     }, [onMouseMove])
     const isMobile = windowWidth < 1100;
+    const modal = modalType === 'description' 
     return (
       <div className={classNames(BodyHtml, Body)} > 
         <>
@@ -149,8 +151,8 @@ const Page = props => {
           <Nav router={props.router} isAnimating={!firstRender} mouseMoved={onMouseMove} isMobile={isMobile} triggerModal={triggerModal}/>
         </footer>
      
-          <Modal show={showModal} isMobile={isMobile}> 
-            {modalType === 'description' ? <DescriptionPage {...props} closeModal={closeModal}/> :  <Thumbnails {...props} closeModal={closeModal}/>}
+          <Modal modalTypeSelected={modal} show={showModal} isMobile={isMobile}> 
+            {modal ? <DescriptionPage {...props} closeModal={closeModal}/> :  <Thumbnails {...props} isMobile={isMobile} closeModal={closeModal}/>}
           </Modal>
       
         </>

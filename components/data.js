@@ -100,6 +100,74 @@ projectData: [
       { url: '/IMG_9690.JPG', isHorizontal: true },
       { url: '/IMG_9691.JPG', isHorizontal: false }
     ]
+  },
+  { 
+    id: 6,
+    title: 'Berlin',
+    description: `
+    This is a project description about
+    tokayo. The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
+  },
+  { 
+    id: 7,
+    title: 'Rome',
+    description: `
+    This is a project description about
+    tokayo. The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
+  },
+  { 
+    id: 8,
+    title: 'Paris',
+    description: `
+    This is a project description about
+    tokayo. The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
+  },
+  { 
+    id: 9,
+    title: 'London',
+    description: `
+    This is a project description about
+    tokayo. The description describes
+    what the project is and how it came
+    about. Reading it will be optional.
+    `,
+    images: [
+      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
+      { url: '/IMG_9689.JPG', isHorizontal: true },
+      { url: '/IMG_9690.JPG', isHorizontal: true },
+      { url: '/IMG_9691.JPG', isHorizontal: false }
+    ]
   }
 ],
 printsData: [

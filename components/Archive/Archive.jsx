@@ -62,7 +62,7 @@ const ulWrapper = css`
     flex-direction: row;
     margin-top: 200px;
   }
-  @media (max-width: 321px) {
+  @media (max-width: 320px) {
     font-size: initial;
   }
 
@@ -125,7 +125,7 @@ const Archive = memo(props => {
               <li className={archiveList} key={index} >
                   <LinkButton 
                     href={`/[projectName]/[projectImage]`}
-                    as={`/${item.title}/${0}`}
+                    as={`/${item.title}/${1}`}
                     name={concatComma(item.title, index, array, windowWidth)}
                     onClick={open}
                     className={projectItem(isHovered)}

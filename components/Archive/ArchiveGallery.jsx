@@ -35,12 +35,12 @@ const ArchiveGallery = withRouter(props => {
 
 const projectName = props.router.query.projectName
 const getProject = props.projectData.find(project => project.title === projectName);
-
+const trueIndex = Number(projectImage)
   return (
     <div className={archiveWrapper}>
      <Carousel 
       {...props}  
-      projectImageIndex={Number(projectImage)}
+      projectImageIndex={trueIndex}
       project={getProject}
       />
     </div>

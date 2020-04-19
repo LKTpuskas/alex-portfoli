@@ -2,15 +2,15 @@ import { DialogOverlay, DialogContent } from "@reach/dialog";
 import {useTransition, animated} from 'react-spring'
 import { css } from 'emotion';
 
-const modalCss = (isMobile) => css`
+const modalCss = (isMobile, modalTypeSelected) => css`
   position: fixed;
   top: 0;
   left: 0;
   overflow: ${isMobile ? 'scroll' : 'hidden'};
-  background: white;
+  background: ${modalTypeSelected ? '#ffffff94' : 'white'};
 `
 
-export default function Modal({ show, children, isMobile }) {
+export default function Modal({ show, children, isMobile, modalTypeSelected }) {
   const AnimatedDialogOverlay = animated(DialogOverlay);
   const AnimatedDialogContent = animated(DialogContent);
   const transitions = useTransition(show, null, {
@@ -24,7 +24,7 @@ export default function Modal({ show, children, isMobile }) {
         ({ item, key, props: styles }, keyid) => {
           const labelId = `label--${keyid}`
           return item && (
-            <AnimatedDialogOverlay className={modalCss(isMobile)} style={{ opacity: styles.opacity }}>
+            <AnimatedDialogOverlay className={modalCss(isMobile, modalTypeSelected)} style={{ opacity: styles.opacity }}>
               <AnimatedDialogContent
                 aria-labelledby={labelId}
                 style={{

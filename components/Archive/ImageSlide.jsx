@@ -23,12 +23,19 @@ const ImageSlide = ({ selectedImage, currentIndex, opacity }) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: ${isHorizontal ? `150px 0` : `0 10px`};
+    margin: ${isHorizontal ? `125px 0` : `0 10px`};
     padding: 10px;
     width: 100%; 
     height: 100%; 
-    @media (min-width: 1020px) {
-      
+    @media (min-height: 660px) and (min-width: 360px) { /* Iphone 6/7/8 */
+    margin: ${isHorizontal ? `150px 0` : `0 10px`};
+    }
+    @media (min-height: 800px) and (min-width: 370px) { /* IPhone X */
+      margin: ${isHorizontal ? `25vh 0` : `65px 10px`};
+    }
+    @media (min-width: 760px) {
+      width: ${isHorizontal ? '100vw' : '70vw'};
+      margin: ${isHorizontal ? `20vh 0` : `65px 10px`};
     }
   `
 
