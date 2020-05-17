@@ -33,7 +33,6 @@ const photoOverlay = (isHovered) => css`
 const archiveWrapper = css`
   align-items: center;
   justify-content: center;
-  height: 100vh;
   width: 100vw;
 `;
 
@@ -52,7 +51,7 @@ const projectItem = (isHovered) => css`
 //   margin-top: 100px; 
 const ulWrapper = css`
   font-size: 75px;
-  margin-top: 100px; 
+/*   margin-top: 100px;  */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -60,13 +59,16 @@ const ulWrapper = css`
   flex-direction: column;
   
   @media (min-width: 1020px) {
-    flex-direction: row;
-    margin-top: 200px;
+    flex-direction: column;
+    margin-top: 100px;
   }
-  @media (max-width: 321px) {
+  @media (max-width: 320px) {
     font-size: initial;
   }
-
+  @media (min-width: 2500px) {
+    flex-direction: row;
+    margin: 20% 300px;
+  }
 `;
 
 
@@ -126,8 +128,8 @@ const Archive = memo(props => {
               <li className={archiveList} key={index} >
                   <LinkButton 
                     href={`/[projectName]/[projectImage]`}
-                    as={`/${item.title}/${0}`}
-                    name={concatComma(item.title, index, array, windowWidth)}
+                    as={`/${item.title}/${1}`}
+                    name={item.title/* concatComma(item.title, index, array, windowWidth) */}
                     onClick={open}
                     className={projectItem(isHovered)}
                     onMouseMove={(e) => mouseMovement(e)}

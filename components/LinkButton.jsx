@@ -7,7 +7,6 @@ const styledLink = css`
   :hover {
     cursor: pointer;
   }
-  width: 20px;
   height: auto;
   text-decoration: none;
   color: black;

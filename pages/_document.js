@@ -34,6 +34,7 @@ export default class MyDocument extends Document {
         </Head>
         <body style={{ margin: 0 }}>
           <Main />
+          <div id='modal' />
           <NextScript />
         </body>
       </html>

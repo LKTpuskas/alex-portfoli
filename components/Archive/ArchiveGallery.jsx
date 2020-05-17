@@ -20,7 +20,6 @@ const photoOverlay = (isHovered) => css`
 const archiveWrapper = css`
   align-items: center;
   justify-content: center;
-  height: 100vh;
   width: 100vw;
 `;
 
@@ -36,13 +35,15 @@ const ArchiveGallery = withRouter(props => {
 
 const projectName = props.router.query.projectName
 const getProject = props.projectData.find(project => project.title === projectName);
-
+const currentProjectIndex = props.projectData.findIndex(proj => proj.title === projectName)
+const trueIndex = Number(projectImage)
   return (
     <div className={archiveWrapper}>
      <Carousel 
       {...props}  
-      projectImageIndex={Number(projectImage)}
+      projectImageIndex={trueIndex}
       project={getProject}
+      currentProjectIndex={currentProjectIndex}
       />
     </div>
   )
