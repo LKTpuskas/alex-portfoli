@@ -23,8 +23,6 @@ projectData: [
       { url: '/IMG_9687.JPG', isHorizontal: false },
       { url: '/IMG_9688.JPG', isHorizontal: false },
       { url: '/IMG_9689.JPG', isHorizontal: true },
-      { url: '/IMG_9690.JPG', isHorizontal: true },
-      { url: '/IMG_9691.JPG', isHorizontal: false }
     ]
   },
   { 
@@ -100,7 +98,7 @@ projectData: [
       { url: '/IMG_9690.JPG', isHorizontal: true },
       { url: '/IMG_9691.JPG', isHorizontal: false }
     ]
-  },
+  }/* ,
   { 
     id: 6,
     title: 'Berlin',
@@ -168,7 +166,7 @@ projectData: [
       { url: '/IMG_9690.JPG', isHorizontal: true },
       { url: '/IMG_9691.JPG', isHorizontal: false }
     ]
-  }
+  } */
 ],
 printsData: [
   { 

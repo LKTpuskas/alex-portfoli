@@ -35,6 +35,7 @@ const ArchiveGallery = withRouter(props => {
 
 const projectName = props.router.query.projectName
 const getProject = props.projectData.find(project => project.title === projectName);
+const currentProjectIndex = props.projectData.findIndex(proj => proj.title === projectName)
 const trueIndex = Number(projectImage)
   return (
     <div className={archiveWrapper}>
@@ -42,6 +43,7 @@ const trueIndex = Number(projectImage)
       {...props}  
       projectImageIndex={trueIndex}
       project={getProject}
+      currentProjectIndex={currentProjectIndex}
       />
     </div>
   )

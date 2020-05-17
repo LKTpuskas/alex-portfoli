@@ -39,21 +39,9 @@ injectGlobal`
 const json = response => response.json(); */
 
 class MyApp extends App {
-  state = {
-    fadeOutOverlay: true,
-    unMountOverlay: true
-  };
-  componentDidMount() {
-    setTimeout(() => this.setState({ fadeOutOverlay: false }), 6000);
-    setTimeout(() => this.setState({ unMountOverlay: false }), 10000);
-  }
-
-  componentWillUnmount() {
-  }
   render() {
-    const { Component, pageProps, router } = this.props;
-    const { fadeOutOverlay, unMountOverlay } = this.state;
-    const content = <ModalContent {...bulkData} />;
+    const { Component, router } = this.props;
+    
     const loadComponents = bulkData
       ? <Page key={router.route} router={router}>
         <Component key={router.route} {...bulkData} />
@@ -61,13 +49,6 @@ class MyApp extends App {
 
     /* {overlayContent} */
     return loadComponents
-        {/* <PageTransition
-          skipInitialTransition={true}
-          timeout={400}
-          classNames="page-transition" >
-          {loadComponents}
-        </PageTransition> */}
-  
   }
 }
 

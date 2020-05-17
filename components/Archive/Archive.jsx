@@ -59,13 +59,16 @@ const ulWrapper = css`
   flex-direction: column;
   
   @media (min-width: 1020px) {
-    flex-direction: row;
-    margin-top: 200px;
+    flex-direction: column;
+    margin-top: 100px;
   }
   @media (max-width: 320px) {
     font-size: initial;
   }
-
+  @media (min-width: 2500px) {
+    flex-direction: row;
+    margin: 20% 300px;
+  }
 `;
 
 
@@ -126,7 +129,7 @@ const Archive = memo(props => {
                   <LinkButton 
                     href={`/[projectName]/[projectImage]`}
                     as={`/${item.title}/${1}`}
-                    name={concatComma(item.title, index, array, windowWidth)}
+                    name={item.title/* concatComma(item.title, index, array, windowWidth) */}
                     onClick={open}
                     className={projectItem(isHovered)}
                     onMouseMove={(e) => mouseMovement(e)}
