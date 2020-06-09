@@ -3,7 +3,7 @@ import { css } from 'emotion';
 import Link from 'next/link';
 import classNames from 'classnames';
 
-const styledLink = css`
+export const styledLink = css`
   :hover {
     cursor: pointer;
   }

@@ -1,6 +1,7 @@
 import { useState, memo } from 'react'
 import { mainNav, navLinks, mainBtn, sideLinks, mobileSideLinks, archiveFooter} from './NavStyle';
 import LinkButton from '../LinkButton';
+import Link from 'next/link';
 
 
 {/* <ul className={mainNav} >
@@ -14,24 +15,6 @@ import LinkButton from '../LinkButton';
   <LinkButton href={'/prints'} name={'Instagram'} className={navLinks} />
 </li>
 </ul> */}
-
-function homeButton() {
-  return <li className={mainBtn}>
-  <LinkButton href={'/'} name={'ALEXANDERHANA'} className={navLinks} />
-</li>
-}
-
-function sideLinkButton(href, name, showSideLinksStyle, setMouseMove) {
-  return  <li className={showSideLinksStyle} onMouseLeave={() => setMouseMove(false)}>
-  <button href={href} name={name} className={navLinks}>{name}</button>
-</li>
-}
-
-function projectButton(name, setMouseMove, showSideLinksStyle, onClick) {
-  return <li className={showSideLinksStyle} onMouseLeave={() => setMouseMove(false)}>
-  <button className={navLinks} onClick={onClick}>{name}</button> 
-</li>
-}
 
 const Nav = memo(function Nav({ router, mouseMoved, isMobile, triggerModal, setOnHoverFooter }) {
   const [isHovered, setMouseMove] = useState(false);
@@ -48,7 +31,7 @@ const Nav = memo(function Nav({ router, mouseMoved, isMobile, triggerModal, setO
        <LinkButton href={'/'} name={'ALEXANDERHANA'} className={navLinks} />
        </li>
        <li className={showSideLinksStyle}>
-        {isIndex ? <button href={'www.instagram.com/alexanderhana'} name={'Instagram'} className={navLinks}>Instagram</button>
+        {isIndex ? <Link className={navLinks} href="https://instagram.com/alexanderhana" passHref={true}><Button>dfdf</Button></Link>
         : <button name={'Thumbnails'} className={navLinks} onClick={() => triggerModal('thumbnails')}>Thumbnails</button> }
         </li>
   </ul> 
