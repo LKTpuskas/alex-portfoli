@@ -29,6 +29,7 @@ export const archiveFooter = css`
 `;
 /*  transform: translateY(-100px) scale(4); */
 export const mainNav = css`
+width: 100%;
   display: flex;
   position:relative;
   justify-content: center;
@@ -39,19 +40,22 @@ export const navLinks = css`
   border: none;
   outline: none;
   padding: 0;
+  cursor: pointer;
 `;
 
 export const mainBtn = css`
 /* margin-right: 16px; */
-width: 250px;
+/* width: 250px; */
     text-align: center;
-
-    margin: 0 10px;
-`;
+    cursor: pointer;
+    margin: 0 16px;
+`
 
 export const sideLinks = css`
-width: 75px;
+/* width: 75px; */
     text-align: center;
+    
+ 
  /*  &:first-child {margin-right: 16px;} */
 /*   display: initial;
   min-width: 100px;

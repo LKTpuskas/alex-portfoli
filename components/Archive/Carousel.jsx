@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect }  from 'react';
+import { useRef, useState, useEffect }  from 'react';
 
 import ImageSlide from './ImageSlide';
 import Link from 'next/link';
@@ -27,12 +27,14 @@ const imageExitDone = css`
   background-color: blue;
 `
 //  flex-direction row on desktop
-const flexRowWrapper = css`
+const flexRowWrapper = (imgMounted) => css`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
   padding: 8vh 22vw;
+  transition: transform 650ms ease-in-out;
+  transform: ${imgMounted ? 'scaleX(1)' : 'scaleX(0)'}; 
 `
 
 const archiveWrapper = css`
@@ -73,17 +75,21 @@ function Carousel(props) {
   const [isFaded, setIsFaded] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(props.projectImageIndex);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(props.currentProjectIndex);
+  const [carouselMounted, setCarouselMounted] = useState(false);
   const [isNextPrevious, setIsNextPrevious] = useState(false);
-  
-  
-  
+
+  useEffect(() => {
+    const timer1 = setTimeout(() => setCarouselMounted(true), 700)
+    return () => {
+      clearTimeout(timer1)
+    }
+  }, [])
+
   useEffect(() => {
     setCurrentImageIndex(props.projectImageIndex)
     setCurrentProjectIndex(props.currentProjectIndex)
   }, [props.projectImageIndex, props.currentProjectIndex]);
-  
-  const projectName = props.project && props.project.title;
- 
+
   const handleNextPosition = (shouldResetIndex) => {
     if (shouldResetIndex) {
       const newPosition = currentProjectIndex + 1 
@@ -111,7 +117,7 @@ function Carousel(props) {
     setCurrentImageIndex(trueIndex)
     setCurrentProjectIndex(previousProject)
     setIsNextPrevious(true)
-    Router.push(`/[projectName]/[projectImage]`, `/${selectedProject}/${trueIndex}`)
+    Router.push('/[projectName]/[projectImage]', `/${selectedProject}/${trueIndex}`)
   }
   
   const nextSlide = () => {
@@ -126,7 +132,7 @@ function Carousel(props) {
     setCurrentImageIndex(trueIndex)
     setCurrentProjectIndex(nextProject)
     setIsNextPrevious(true)
-    Router.push(`/[projectName]/[projectImage]`, `/${selectedProject}/${trueIndex}`)
+    Router.push('/[projectName]/[projectImage]', `/${selectedProject}/${trueIndex}`)
   }
   
   const onClickWindow = event => {
@@ -146,7 +152,7 @@ function Carousel(props) {
   cursor.style.top = y + 'px'
 }
 
-  const { project, onHoverFooter, isMobile } = props    
+  const { project, onHoverFooter, isMobile, showModal } = props
   const selectedImage = project && project.images[currentImageIndex - 1];
    
   const handlers = useSwipeable({
@@ -158,11 +164,11 @@ function Carousel(props) {
  
   
   return !isNaN(currentImageIndex) && <div className={archiveWrapper} onMouseMove={!isMobile ? move : undefined}>
-    <div {...handlers} onClick={event => !isMobile && onClickWindow(event) } className={flexRowWrapper}>    
-    {!onHoverFooter && <div className={cursorBackground(isMobile, onHoverFooter)} ref={cursorContent}>{
+    <div {...handlers} onClick={event => !isMobile && onClickWindow(event) } className={flexRowWrapper(carouselMounted)}>    
+    {!showModal && !onHoverFooter && <div className={cursorBackground(isMobile, onHoverFooter)} ref={cursorContent}>{
     `${project && project.title} ${currentImageIndex}/${project && project.images.length}`}
     </div> }
-        <ImageSlide 
+        <ImageSlide
           currentIndex={currentImageIndex} 
           selectedImage={selectedImage} 
           opacity={isFaded} 

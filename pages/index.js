@@ -27,6 +27,8 @@ injectGlobal`
       height: 100%;
       overflow-x: hidden;
       overflow-y: scroll;
+      font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
+  Helvetica, Arial, "Lucida Grande", sans-serif;
     }
     body {
       font-size: 100%;
@@ -38,6 +40,12 @@ injectGlobal`
       list-style-type: none;
       padding: 0;
       margin: 0;
+    }
+    button {
+      background: none;
+      outline: none;
+      border: none;
+      font-family: inherit;
     }
     a {
       text-decoration: none;

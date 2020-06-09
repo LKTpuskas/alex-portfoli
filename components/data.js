@@ -35,7 +35,7 @@ projectData: [
     about. Reading it will be optional.
     `,
     images: [
-      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9688.JPG', isHorizontal: false },
       { url: '/IMG_9687.JPG', isHorizontal: false },
       { url: '/IMG_9687.JPG', isHorizontal: false },
       { url: '/IMG_9687.JPG', isHorizontal: false },
@@ -58,7 +58,7 @@ projectData: [
     about. Reading it will be optional.
     `,
     images: [
-      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9691.JPG', isHorizontal: false },
       { url: '/IMG_9688.JPG', isHorizontal: false },
       { url: '/IMG_9689.JPG', isHorizontal: true },
       { url: '/IMG_9690.JPG', isHorizontal: true },
@@ -92,7 +92,7 @@ projectData: [
     about. Reading it will be optional.
     `,
     images: [
-      { url: '/IMG_9687.JPG', isHorizontal: false },
+      { url: '/IMG_9691.JPG', isHorizontal: false },
       { url: '/IMG_9688.JPG', isHorizontal: false },
       { url: '/IMG_9689.JPG', isHorizontal: true },
       { url: '/IMG_9690.JPG', isHorizontal: true },

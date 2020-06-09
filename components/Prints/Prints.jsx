@@ -7,6 +7,7 @@ import { useTrail, useTransition, animated } from 'react-spring'
 const image = css`
 width: 100%;
 height: auto;
+cursor: pointer;
 `;
 
 const projectTitle = (isHovered, delayed) => css`
@@ -26,6 +27,12 @@ const projectTitle = (isHovered, delayed) => css`
  opacity: ${isHovered ? 1 : 0};
  animation: fade 2s linear;
  transition: opacity 1.35s;
+ letter-spacing: 8px;
+ font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
+  Helvetica, Arial, "Lucida Grande", sans-serif;
+  @media (min-width: 734px) {
+    font-size: 55px;
+  }
 `;
 
 const imageWrapper = css`
@@ -34,7 +41,7 @@ padding: 3px;
 margin-bottom: 17px;
 @media (min-width: 1200px) {  /* Desktop  */
   margin-right: 30px;
-  max-width: 140px;
+  max-width: 120px;
   margin-bottom: 8px;
 }
 `;
@@ -49,7 +56,7 @@ position: relative;
 /*   margin: 5px auto; */
 /*   justify-content: ${moreThanSeven ? 'flex-start' : 'center'};
   margin: 0 25%; */
-margin-bottom: 60px;
+margin-bottom: 100px;
 
 }
 @media (min-width: 2000px) {  /* Desktop  */
@@ -137,9 +144,7 @@ function Prints({ isMobile, children: { props: { projectData } }, closeModal }) 
               key={projectIndex}
               onMouseEnter={() => !isMobile && handlePosition(projectIndex)}
               onMouseLeave={() => !isMobile && handlePosition(projectIndex)}>
-                
-                <h4 className={projectTitle(isHovered, delayed)}>{project.title}</h4>
-              <animated.h4 key={projectIndex} className={projectTitle(isHovered)}>{project.title}</animated.h4> 
+              <animated.li key={projectIndex} className={projectTitle(isHovered)}>{project.title}</animated.li> 
                 <Images project={project} projectIndex={projectIndex} closeModal={closeModal}/> 
             </animated.div>
           )
