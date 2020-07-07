@@ -80,14 +80,15 @@ function randomIntFromInterval(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-const Images = memo(function GetImage({ project,  projectIndex, closeModal }) {
+const Images = memo(function GetImage({ project,  projectIndex, closeModal, setReverse }) {
   const [reverseStyle, setReverseStyle] = useState(false);
 
 
 
   const onSetCurrentItem = (imageIndex) => {
+    setReverse(true)
     Router.push(`/[projectName]/[projectImage]`, `/${project.title}/${imageIndex}`);
-    closeModal();
+    setTimeout(() => closeModal(), 2000);
     //setReverseStyle(true);
   }
  
@@ -106,10 +107,10 @@ const Images = memo(function GetImage({ project,  projectIndex, closeModal }) {
 })
 
 
-function Prints({ isMobile, children: { props: { projectData } }, closeModal }) {
-  //console.log('Prints rerendered')
+function Prints({ isMobile, projectData, closeModal }) {
   const [currentPos, handlePosition] = useState(null);
   const [delayed, setDelayed] = useState(true);
+  const [reverseTrail, setReverse] = useState(false);
   useEffect(() => {
     const timeout = setTimeout(() => setDelayed(false), 2000);
     return () => clearTimeout(timeout);
@@ -119,11 +120,14 @@ function Prints({ isMobile, children: { props: { projectData } }, closeModal }) 
     velocity: 4,
    }
 
+   console.log(reverseTrail)
   const trail = useTrail(projectData.length, {
+    reverse: reverseTrail,
     config,
     opacity: 1,
     width: '100%',
-    from: { opacity: 0, width: '0%' },
+    from: { opacity: 0, x: -100 },
+    to: { opacity: reverseTrail ? 0 : 1, x: reverseTrail ? -100 : 0 },
     delay: 1000
   })
 
@@ -131,7 +135,7 @@ function Prints({ isMobile, children: { props: { projectData } }, closeModal }) 
   return (
     <>
       {
-       trail.map(({ x, width, ...rest }, projectIndex) => {
+       trail.map(({ x, width, opacity, ...rest }, projectIndex) => {
         const project = projectData[projectIndex]
           const isHovered = currentPos === projectIndex
           const moreThanSeven = project.images.length > 7;
@@ -139,13 +143,13 @@ function Prints({ isMobile, children: { props: { projectData } }, closeModal }) 
           return(
             <animated.div 
               key={projectIndex}
-              style={{ width }}
+              style={{ opacity: opacity, transform: x.interpolate(x => `translate3d(${x}%,0,0)`) }}
               className={projectItem(moreThanSeven)} 
               key={projectIndex}
               onMouseEnter={() => !isMobile && handlePosition(projectIndex)}
               onMouseLeave={() => !isMobile && handlePosition(projectIndex)}>
               <animated.li key={projectIndex} className={projectTitle(isHovered)}>{project.title}</animated.li> 
-                <Images project={project} projectIndex={projectIndex} closeModal={closeModal}/> 
+                <Images setReverse={setReverse} project={project} projectIndex={projectIndex} closeModal={closeModal}/> 
             </animated.div>
           )
         })

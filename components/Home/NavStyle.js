@@ -1,5 +1,17 @@
 import { css } from 'emotion';
 
+
+export const customAboutStyle = css`
+   :hover {
+    cursor: pointer;
+  }
+  height: auto;
+  text-decoration: none;
+  color: black;
+  font-weight: unset;
+  font-size: initial;
+  `
+
 export const archiveFooter = css`
   margin-bottom: 25px;
   position: absolute;

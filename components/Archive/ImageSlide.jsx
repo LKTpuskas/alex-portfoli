@@ -1,5 +1,6 @@
 import { css } from 'emotion';
 import { useState, useEffect } from 'react';
+import { useCursorContext } from '../CursorContext'
 
 const imageWrapper = (isHorizontal, imageLoaded) => css`
     display: -webkit-box;
@@ -32,14 +33,16 @@ const imageWrapper = (isHorizontal, imageLoaded) => css`
    /*    width: ${isHorizontal ? '50vw' : '30vw'}; */
   /*     margin: ${isHorizontal ? `15vh 0` : `65px 10px`}; */
     }
-  `;
+  `
 
-  const newimgwrapper = (loaded) => css`
+const newimgwrapper = css`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%; 
     height: 100%; 
+    padding-bottom: 100%;
+    margin-bottom: 25%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -50,18 +53,9 @@ const imageWrapper = (isHorizontal, imageLoaded) => css`
     from { filter: blur(3px); }
     to   { filter: blur(0px); }
 }
-  `;
+  `
 
-  
-
-const leftStyle = css`
-width: 100%;
-height: auto;
-opacity: 1;
-transition: all 2s ease-in-out;
-`;
-
-const useProgressiveImage = src => {  
+const useProgressiveImage = src => {
   const [sourceLoaded, setSourceLoaded] = useState(null)
 
   useEffect(() => {
@@ -70,13 +64,24 @@ const useProgressiveImage = src => {
     img.onload = () => setSourceLoaded(src)
   }, [src])
 
-  return sourceLoaded 
+  return sourceLoaded
 }
 
-const ImageSlide = ({ selectedImage, currentIndex, opacity }) => {
+const imagetext = css`
+  position: absolute;
+  bottom: 0;
+`
+
+const ImageSlide = ({ projectTitle, projectSize, selectedImage, currentIndex, opacity }) => {
+  const { bindHoverable } = useCursorContext()
   const loaded = selectedImage && useProgressiveImage(selectedImage.url)
 
-  return loaded ?  <div style={{ backgroundImage: `url(${loaded})` }} className={newimgwrapper(loaded)} /> : null  
+  return loaded ? (
+    <div {...bindHoverable()} style={{ backgroundImage: `url(${loaded})` }} className={newimgwrapper} >
+      
+    </div>
+
+  ) : null
 }
 
 export default ImageSlide;

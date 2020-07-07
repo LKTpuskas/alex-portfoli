@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, createContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import Modal from './Archive/Modal';
 import Prints from './Prints/Prints';
@@ -11,17 +11,6 @@ import { mainNav, navLinks, mainBtn, sideLinks, mobileSideLinks, archiveFooter }
 
 import Nav from '../components/Home/Nav';
 import { css } from 'emotion';
-
-const customAboutStyle = css`
-   :hover {
-    cursor: pointer;
-  }
-  height: auto;
-  text-decoration: none;
-  color: black;
-  font-weight: unset;
-  font-size: initial;
-`
 
 const childrenAnimation = (onMouseMove) => css`
   opacity: 1;
@@ -55,17 +44,19 @@ const childrenWithProps = (children, windowWidth, isMobile, onHoverFooter, showM
   )
 }
 
-const RenderPageElements = function renderPageElements({ currentRoute, onMouseMove, isMobile, children, windowWidth, onHoverFooter, showModal }) {
+const RenderPageElements = function renderPageElements({ currentRoute, isMobile, children, windowWidth, onHoverFooter, showModal }) {
 
   // ADD CUSTOM STYLING WARPPER AROUND CHILDREWITHPROPS FUNCTION 
 
   const routes = {
     '/': () => {
-      return onMouseMove && !isMobile ? <div className={childrenAnimation(onMouseMove)}>{childrenWithProps(children, windowWidth, isMobile)}</div>
+      return !isMobile ? (
+        <div /* className={childrenAnimation(onMouseMove)} */>{childrenWithProps(children, windowWidth, isMobile)}</div>)
         : childrenWithProps(children, windowWidth, isMobile)
 
     },
     '/[projectName]/[projectImage]': () => {
+   
       return childrenWithProps(children, windowWidth, isMobile, onHoverFooter, showModal)
     },
     '/prints': () => {
@@ -145,12 +136,17 @@ const Thumbnails = function Thumbnails(props, closeModal) {
 }
 
 const Page = function Page(props) {
-  const [firstRender, setFirstRender] = useState(true);
-  const [onMouseMove, setMouseMove] = useState(false);
+  // const cursorContent = useRef(null);
+
+/*   const [firstRender, setFirstRender] = useState(true);
+  const [mouseMove, setMouseMove] = useState(false);
   const [onHoverFooter, setOnHoverFooter] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
   const [windowWidth, setWindowWidth] = useState(0);
+  
+  const isMobile = windowWidth < 1100
+
 
   const triggerModal = useCallback((type) => {
     setShowModal(true)
@@ -165,10 +161,7 @@ const Page = function Page(props) {
   useEffect(() => {
     setWindowWidth(window.innerWidth)
   }, [windowWidth])
-  useEffect(() => {
-    /*  onMouseMove && setTimeout(() => setFirstRender(false), 4000) */
-  }, [onMouseMove])
-  const isMobile = windowWidth < 1100;
+
   const modal = modalType === 'description'
   const modalMounted = modalType !== null
   const showSideLinksStyle = isMobile ? mobileSideLinks : sideLinks
@@ -176,74 +169,30 @@ const Page = function Page(props) {
   const isAbout = props.router.route === '/about'
   const AboutOrDescription = isIndex ? 'About' : 'Description'
   const InstaOrThumbs = isIndex ? 'Instagram' : 'Thumbnails'
-  const instaLink = 'https://instagram.com/alexanderhana'
-  return (
-    <div className={classNames(BodyHtml, Body)} >
-      <>
+  const instaLink = */ 'https://instagram.com/alexanderhana'
 
-        <RenderPageElements
+
+
+  return (
+    <div /* className={classNames(BodyHtml, Body)}  */>
+      <>
+       {/*  <div className={cursorBackground(isMobile)} style={{ left: `${left}px`, top: `${top}px` }}/> */}
+     {/*  <div className={cursorBackground(isMobile, onHoverFooter)} ref={cursorContent} /> */}
+      {/*   <RenderPageElements
           currentRoute={props.router.route}
-          onMouseMove={onMouseMove}
           isMobile={isMobile}
           children={props.children}
           windowWidth={windowWidth}
           onHoverFooter={onHoverFooter}
           showModal={showModal}
-        />
-        {/*       <Nav
-          router={props.router}
-          mouseMoved={onMouseMove}
-          isMobile={isMobile}
-          triggerModal={triggerModal}
-          setOnHoverFooter={setOnHoverFooter}
+          mousePosition={{x: 2, y: 2}}
+          setMousePosition={() => {}}
         /> */}
-
-        {/*  <div className={archiveFooter}>
-          <ul>
-            {props.router.route !== '/' ? <button>Description</button> : <button>About</button>}
-            <LinkButton href={'/'} name={'ALEXANDERHANA'} />
-            {props.router.route !== '/' ? <button>thumbnails</button> : <button>Instagram</button>}
-          </ul>
-        </div> */}
-        <footer onMouseEnter={() => setOnHoverFooter(true)} onMouseLeave={() => setOnHoverFooter(false)} className={archiveFooter}>
-          <ul className={mainNav}>{isIndex || isAbout ? (
-            <>{!isAbout && (
-              <li className={showSideLinksStyle}>
-                <Link href='/about' name='About' passHref>
-                  <a className={customAboutStyle}>
-                    About
-                  </a>
-                </Link>
-              </li>
-            )}
-              <li className={mainBtn}>
-                <LinkButton href={'/'} name={'ALEXANDERHANA'} className={navLinks} />
-              </li>
-              <li className={showSideLinksStyle}>
-                <button>
-                  <a className={navLinks} href='https://instagram.com/alexanderhana'>Instagram</a>
-                </button>
-              </li>
-            </>
-          ) : (
-              <>
-                <li className={showSideLinksStyle}>
-                  <button onClick={() => triggerModal('description')} name={'Description'} className={navLinks}>Description</button>
-                </li>
-                <li className={mainBtn}>
-                  <LinkButton href={'/'} name={'ALEXANDERHANA'} className={navLinks} />
-                </li>
-                <li className={showSideLinksStyle}>
-                  <button onClick={() => triggerModal('thumbnails')} name={'Thumbnails'} className={navLinks}>Thumbnails</button>
-                </li>
-              </>
-            )
-          }</ul>
-
-        </footer>
-        <Modal modalTypeSelected={modal} show={showModal} isMobile={isMobile}>
+        {props.children}
+       
+        {/* <Modal modalTypeSelected={modal} show={showModal} isMobile={isMobile}>
           {modalMounted && (modal ? <DescriptionPage {...props} closeModal={closeModal} /> : <Thumbnails {...props} isMobile={isMobile} closeModal={closeModal} />)}
-        </Modal>
+        </Modal> */}
       </>
     </div>
   );
