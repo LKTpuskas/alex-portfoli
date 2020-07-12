@@ -28,7 +28,7 @@ const imageOverlay = (isAnimated, archieveMounted) => css`
   /* background: palegreen; */
   transition: transform 650ms ease-in;
   transform: ${!archieveMounted || isAnimated ? 'translateY(-0%)' : 'translateY(-112%)'}; 
-
+  
 `
 
 const wrap = (isAnimated) => css`
@@ -83,7 +83,15 @@ const image = (isHovered, isAnimated) => css`
  /*  transform-origin:top;
   transition: transform 650ms cubic-bezier(0.68, -0.55, 0.99, 1.01);
   transform: ${isAnimated ? 'scaleX(0)' : 'scaleX(1)'};  */
-
+  @media (min-width: 300px) {
+    width: 250px;
+  }
+  @media (min-width: 700px) {
+    width: 450px;
+  }
+  @media (min-width: 900px) {
+    width: 500px;
+  }
 `
 
 
@@ -100,16 +108,19 @@ const archiveWrapper = css`
 
 const projectItem = (isHovered, isAnimated) => css`
   cursor: pointer;
-  font-size: 3.5rem;
+  font-size: 30px;
   color: ${isHovered ? 'white' : 'white'};
   letter-spacing: 8px;
   align-items: center;
   transition: opacity 2000ms;
   /* opacity: ${isAnimated ? 0 : 1}; */
   justify-content: center;
-  @media (min-width: 734px) {
-        font-size: 75px;
-      }
+  @media (min-width: 700px) {
+        font-size: 50px;
+    }
+  @media (min-width: 900px) {
+    font-size: 60px;
+  }
 `
 
 const ulWrapper = css`
@@ -126,7 +137,7 @@ const ulWrapper = css`
     flex-direction: column;
   }
   @media (max-width: 320px) {
-    font-size: initial;
+   
   }
   @media (min-width: 2500px) {
     flex-direction: row;

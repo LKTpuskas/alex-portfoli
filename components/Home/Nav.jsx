@@ -27,19 +27,17 @@ const Nav = function Nav({ router, mouseMoved, isMobile, triggerModal, setOnHove
       )}
       {MainButton}
       <li className={showSideLinksStyle}>
-        <button>
-          <a className={navLinks} href='https://instagram.com/alexanderhana'>Instagram</a>
-        </button>
+        <a className={navLinks} href='https://instagram.com/alexanderhana'>Instagram</a>
       </li>
       </>
     ) : (
       <>
         <li className={showSideLinksStyle}>
-          <button onClick={() => triggerModal('description')} name={'Description'} className={navLinks}>Description</button>
+          <a onClick={() => triggerModal('description')} name={'Description'} className={navLinks}>Description</a>
         </li>
         {MainButton}
         <li className={showSideLinksStyle}>
-          <button onClick={() => triggerModal('thumbnails')} name={'Thumbnails'} className={navLinks}>Thumbnails</button>
+          <a onClick={() => triggerModal('thumbnails')} name={'Thumbnails'} className={navLinks}>Thumbnails</a>
         </li>
       </>
     )

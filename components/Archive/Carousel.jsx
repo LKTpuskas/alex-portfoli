@@ -44,9 +44,16 @@ const flexRowWrapper = (imgMounted) => css`
   align-items: center;
   height: 100vh;
   /* padding: 8vh 22vw; */
-  padding: 10% 400px;
+  padding: 17% 40px;
   transition: transform 650ms ease-in-out;
 /*   transform: ${imgMounted ? 'scaleX(1)' : 'scaleX(0)'};  */
+
+  @media (min-width: 700px) {
+    padding: 10% 150px;
+  }
+  @media (min-width: 900px) {
+    padding: 8% 420px;
+  }
 `
 
 const archiveWrapper = css`
@@ -83,7 +90,10 @@ const imageOverlay = (isAnimated) => css`
   background: white;
   transition: transform 1000ms ease-in;
   transform: ${isAnimated ? 'translateY(-100%)' : 'translateY(0%)'};
-  border-radius: 120%;
+ border-radius: 37%;
+  @media (min-width: 700px) {
+    border-radius: 100%;
+  }
  
 `
 
@@ -92,6 +102,11 @@ const imagetext = css`
   align-items: flex-end;
   height: auto;
   width: 100%;
+  margin-bottom: 10px;
+  font-size: 12px;
+  @media (min-width: 700px) {
+    font-size: 18px;
+  }
 `
 
 const cursortext = css`

@@ -112,7 +112,7 @@ const descriptionStyle = css`
 const descriptionParagraph = css`
   text-align: center;
   margin: 0;
-  font-size: 40px;
+ 
   padding: 50px;
   @media (min-width: 1300px) {  /* laptop */
     margin: 15vw;

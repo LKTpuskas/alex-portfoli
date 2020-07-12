@@ -92,11 +92,17 @@ const modalWrapper = css`
 const descriptionParagraph = css`
   text-align: center;
   margin: 0;
-  font-size: 40px;
-  padding: 50px;
-  @media (min-width: 1300px) {  /* laptop */
-    margin: 15vw;
+ 
+  padding: 17% 40px;
+  @media (min-width: 700px) {  
+    font-size: 18px;
+    padding: 10% 150px;
   }
+  @media (min-width: 900px) {  
+    font-size: 22px;
+    padding: 8% 420px;
+  }
+ 
 `
 
 function DescriptionPage(props) {
