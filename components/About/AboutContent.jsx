@@ -16,9 +16,9 @@ const aboutWrapper = css`
 const AboutContent = props => (
   <div className={aboutWrapper} >
     <br/>
-    <h2>{props.aboutMe}</h2>
-    <h2>{props.email}</h2>
-    <h2>{props.phone}</h2>
+    <p>{props.aboutMe}</p>
+    <p>{props.email}</p>
+    <p>{props.phone}</p>
   </div>
 )
 

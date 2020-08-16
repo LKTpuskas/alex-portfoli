@@ -1,43 +1,51 @@
 import { useState, memo } from 'react'
-import { mainNav, navLinks, mainBtn, sideLinks, mobileSideLinks, archiveFooter} from './NavStyle';
+import { customAboutStyle, mainNav, navLinks, mainBtn, sideLinks, mobileSideLinks, archiveFooter } from './NavStyle';
 import LinkButton from '../LinkButton';
 import Link from 'next/link';
 
 
-{/* <ul className={mainNav} >
-<li className={showSideLinks} onMouseLeave={() => setMouseMove(false)}>
-  <LinkButton href={'/about'} name={'Contact'} className={navLinks} />
-</li>
-<li className={mainBtn(mouseMoved)} onMouseEnter={() => setMouseMove(true)}>
-  <LinkButton href={'/'} name={'ALEXANDERHANA'} className={navLinks} />
-</li>
-<li className={showSideLinks} onMouseLeave={() => setMouseMove(false)}>
-  <LinkButton href={'/prints'} name={'Instagram'} className={navLinks} />
-</li>
-</ul> */}
 
-const Nav = memo(function Nav({ router, mouseMoved, isMobile, triggerModal, setOnHoverFooter }) {
+const MainButton = <li className={mainBtn}>
+<LinkButton href={'/'} name={'ALEXANDERHANA'} className={navLinks} />
+</li>
+
+const Nav = function Nav({ router, mouseMoved, isMobile, triggerModal, setOnHoverFooter, isAbout }) {
   const [isHovered, setMouseMove] = useState(false);
   const showSideLinksStyle = isMobile ? mobileSideLinks : sideLinks
   const isIndex = router.route === '/'
+ 
   return <footer onMouseEnter={() => setOnHoverFooter(true)} onMouseLeave={() => setOnHoverFooter(false)} className={archiveFooter}>
-      <ul className={mainNav}>
-       
+    <ul className={mainNav}>{isIndex || isAbout ? (
+      <>{!isAbout && (
         <li className={showSideLinksStyle}>
-        {isIndex ? <button href={'/about'} name={'About'} className={navLinks}>About</button>
-        : <button name={'Description'} className={navLinks} onClick={() => triggerModal('description')}>Description</button> }
+          <Link href='/about' name='About' passHref>
+            <a className={customAboutStyle}>
+              About
+            </a>
+          </Link>
         </li>
-       <li className={mainBtn}>
-       <LinkButton href={'/'} name={'ALEXANDERHANA'} className={navLinks} />
-       </li>
-       <li className={showSideLinksStyle}>
-        {isIndex ? <Link className={navLinks} href="https://instagram.com/alexanderhana" passHref={true}><Button>dfdf</Button></Link>
-        : <button name={'Thumbnails'} className={navLinks} onClick={() => triggerModal('thumbnails')}>Thumbnails</button> }
+      )}
+      {MainButton}
+      <li className={showSideLinksStyle}>
+        <a className={navLinks} href='https://instagram.com/alexanderhana'>Instagram</a>
+      </li>
+      </>
+    ) : (
+      <>
+        <li className={showSideLinksStyle}>
+          <a onClick={() => triggerModal('description')} name={'Description'} className={navLinks}>Description</a>
         </li>
-  </ul> 
-  </footer>
-});
+        {MainButton}
+        <li className={showSideLinksStyle}>
+          <a onClick={() => triggerModal('thumbnails')} name={'Thumbnails'} className={navLinks}>Thumbnails</a>
+        </li>
+      </>
+    )
+    }</ul>
 
-export default Nav;
+  </footer>
+}
+
+export default Nav
 
 /* {isIndex ? sideLinkButton('www.instagram.com/alexanderhana/', 'Instagrham', showSideLinksStyle, setMouseMove) : projectButton('Thumbnails', setMouseMove, showSideLinksStyle, () => triggerModal('thumbnails'))} */

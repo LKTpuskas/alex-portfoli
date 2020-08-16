@@ -15,7 +15,6 @@ export const Body = css`
   -ms-font-smoothing: antialiased;
   ¨font-smoothing: antialiased;
   font-weight: 300;
-  transition: opacity 1s ease-in-out;
   position: relative;
   list-style-type: none;
   ::selection {

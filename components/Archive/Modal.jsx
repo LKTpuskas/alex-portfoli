@@ -12,7 +12,7 @@ const modalCss = (isMobile, modalTypeSelected) => css`
   background: ${modalTypeSelected ? '#ffffff94' : 'white'};
 `
 const backdropStyle = (opacityOn, modalTypeSelected, isMobile) => css`
-  background: ${modalTypeSelected ? '#ffffff94' : 'white'};
+  background: ${modalTypeSelected ? '#ffffffd9' : 'white'};
   display: block;
   left: 0;
   position: absolute;

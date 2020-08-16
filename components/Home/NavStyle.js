@@ -1,5 +1,17 @@
 import { css } from 'emotion';
 
+
+export const customAboutStyle = css`
+   :hover {
+    cursor: pointer;
+  }
+  height: auto;
+  text-decoration: none;
+  color: black;
+  font-weight: unset;
+  
+  `
+
 export const archiveFooter = css`
   margin-bottom: 25px;
   position: absolute;
@@ -7,14 +19,14 @@ export const archiveFooter = css`
   bottom: 0;
   width: 100vw;
   font-size: 12px;
-  @media (min-width: 360px) {
+  @media (min-width: 300px) {
         font-size: 12px;
   }
-  @media (min-width: 720px) {
-    font-size: 25px;
-    transition-timing-function: ease-in;
-    transition: 0.2s; 
-    transition: 3s;
+  @media (min-width: 700px) {
+    font-size: 18px;
+  }
+  @media (min-width: 900px) {
+    font-size: 18px;
   }
 /* cubic-bezier() values for first example from preceding demo page */
 /*     transition-timing-function: cubic-bezier(.1, .1, .2, .1);

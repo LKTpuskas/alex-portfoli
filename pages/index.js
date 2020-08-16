@@ -1,11 +1,13 @@
 // import Link from 'next/link';
 import { css, hydrate, injectGlobal } from 'emotion';
-import Home from '../components/Home/Home';
+import Link from "next/link";
+
+import Archive from '../components/Archive/Archive';
 
 // Adds server generated styles to emotion cache.
 // '__NEXT_DATA__.ids' is set in '_document.js'
 if (typeof window !== 'undefined') {
-  hydrate(window.__NEXT_DATA__.ids);
+  hydrate(window.__NEXT_DATA__.ids)
 }
 
 injectGlobal`
@@ -76,9 +78,10 @@ const basicStyle = css`
 // add another file inside pages folder to add a route
 // then add the components inside the new route
 
+
 const Index = props => (
   <div className={basicStyle}>
-    <Home {...props} />
+    <Archive {...props} />
   </div>
 );
 

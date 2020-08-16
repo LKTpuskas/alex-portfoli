@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, memo } from 'react';
+import Link from "next/link";
 import { useIntersection } from 'react-use';
 import Router, { useRouter } from 'next/router';
 
@@ -7,6 +8,7 @@ import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
 import { css } from 'emotion';
 import LinkButton from '../LinkButton';
 import Modal from './Modal'
+import { useCursorContext } from '../CursorContext'
 
 
 // https://streamich.github.io/react-use/?path=/story/sensors-useintersection--docs
@@ -17,23 +19,87 @@ import Modal from './Modal'
 // mobile 420px
 // tablet 768px
 // desktop 1024px
-const photoOverlay = (isHovered, isAnimated) => css`
-  position: fixed;
-  width: 400px;
-  height: auto;
-  transition-duration: 400ms;
-  transition-timing-function: ease-out;
-  background-color: rgba(0, 0, 0, 0.7);
-  opacity: ${isHovered ? 1 : 1};
-  filter: ${isHovered ? 'grayscale(40%)' : 'grayscale(0%)'};
-  transition: ${isHovered ? 'opacity 0.3s' : 'opacity 0.0s'};
-  z-index: 1;
-  transform-origin:top;
-  transition: transform 650ms cubic-bezier(0.68, -0.55, 0.99, 1.01);
-  transform: ${isAnimated ? 'scaleX(0)' : 'scaleX(1)'}; 
+
+const imageOverlay = (isAnimated, archieveMounted) => css`
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 1;
+  /* background: palegreen; */
+  transition: transform 650ms ease-in;
+  transform: ${!archieveMounted || isAnimated ? 'translateY(-0%)' : 'translateY(-112%)'}; 
+  
 `
 
+const wrap = (isAnimated) => css`
+transition: transform 650ms ease-in;
+ /*  transform: ${isAnimated ? 'translateY(-15%)' : 'translateY(-100%)'};  */
+  width: 100%;
+  height: 100%;
+
+  top: 0;
+  left: 0;
+  position: absolute;
+`
+/* const svg = (isAnimated) => css`
+position: absolute;
+top: 0;
+  left: 0;
+    height: 29%;
+    width: 100%;
+    transform: ${isAnimated ? 'translate(100%)' : 'translateY(-44%)'} rotate(180deg);
+ 
+   
+` */
+
+
+
+const imageOverlaySvg = css`
+  background: blue;
+  position: absolute;
+`
+
+const overlaybottom = css`
+  bottom: 0;
+  background: transparent;
+`
+//&:before
+
+const image = (isHovered, isAnimated) => css`
+  position: fixed;
+  width: 500px;
+  height: auto;
+  /* transition-duration: 400ms; */
+  /* transition-timing-function: ease-out; */
+   opacity: ${isHovered ? 1 : 1};
+ /*  filter: ${isHovered ? 'grayscale(40%)' : 'grayscale(0%)'}; */
+ /*  transition: opacity 0.3s; */
+  /* transition: ${isHovered ? 'opacity 0.3s' : 'opacity 0.0s'}; */
+  z-index: 1;
+
+/*   transition-delay: 600ms; */
+
+  transition: opacity 300ms ease-in-out;
+ /*  transform-origin:top;
+  transition: transform 650ms cubic-bezier(0.68, -0.55, 0.99, 1.01);
+  transform: ${isAnimated ? 'scaleX(0)' : 'scaleX(1)'};  */
+  @media (min-width: 300px) {
+    width: 250px;
+  }
+  @media (min-width: 700px) {
+    width: 450px;
+  }
+  @media (min-width: 900px) {
+    width: 400px;
+  }
+`
+
+
 const archiveWrapper = css`
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100vw;
@@ -42,19 +108,21 @@ const archiveWrapper = css`
 
 const projectItem = (isHovered, isAnimated) => css`
   cursor: pointer;
-  font-size: 3.5rem;
-  color: ${isHovered ? 'white' : 'black'};
+  font-size: 30px;
+  color: ${isHovered ? 'white' : 'white'};
   letter-spacing: 8px;
   align-items: center;
   transition: opacity 2000ms;
   /* opacity: ${isAnimated ? 0 : 1}; */
   justify-content: center;
-  @media (min-width: 734px) {
-        font-size: 75px;
-      }
+  @media (min-width: 700px) {
+        font-size: 50px;
+    }
+  @media (min-width: 900px) {
+    font-size: 60px;
+  }
 `
 
-//   margin-top: 100px; 
 const ulWrapper = css`
   font-size: 75px;
 /*   margin-top: 100px;  */
@@ -69,7 +137,7 @@ const ulWrapper = css`
     flex-direction: column;
   }
   @media (max-width: 320px) {
-    font-size: initial;
+   
   }
   @media (min-width: 2500px) {
     flex-direction: row;
@@ -89,16 +157,16 @@ const archiveList = css`
 `;
 
 const Archive = memo(props => {
+  // const { bindHoverable } = useCursorContext()
   const [showDialog, setShowDialog] = useState(false);
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
   const [isHovered, handleHover] = useState(false);
-  const [xPosition, setXPosition] = useState(0);
-  const [yPosition, setYPosition] = useState(0);
   const [currentPos, handlePosition] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
   const [timeoutStarted, startTimeout] = useState(false);
   const [imgIsAnimated, setAnimationDone] = useState(false);
+  const [archieveMounted, setArchieveMounted] = useState(false);
 
   const [clickedTitle, setClickedTitle] = useState()
 
@@ -107,9 +175,16 @@ const Archive = memo(props => {
   }, [windowWidth])
 
   useEffect(() => {
+    const timer1 = setTimeout(() => setArchieveMounted(true), 700)
+    return () => {
+      clearTimeout(timer1)
+    }
+  }, [])
+
+  useEffect(() => {
     if (timeoutStarted) {
       setAnimationDone(true)
-      const timer1 = setTimeout(() => Router.push(`/${clickedTitle}/${1}`), 700)
+      const timer1 = setTimeout(() => Router.push('/[projectName]/[projectImage]', `/${clickedTitle}/${1}`), 700)
       return () => {
         clearTimeout(timer1)
       }
@@ -122,15 +197,6 @@ const Archive = memo(props => {
   }
   // const projectExists = props.projectData && props.projectData.data;
 
-  const mouseMovement = (event) => {
-    //console.log('horizontal', event.clientX)
-    // console.log('vertical', event.clientY)
-    /*  useCallback(() => setXPosition(event.clientX + 20), [xPosition])
-    useCallback(() => setYPosition(event.clientY + 20), [yPosition]) */
-    setXPosition(event.clientX + 20, [xPosition])
-    setYPosition(event.clientY + 20, [yPosition])
-  }
-
   const handleOnLinkClick = title => {
     setClickedTitle(title)
     startTimeout(true)
@@ -140,19 +206,32 @@ const Archive = memo(props => {
     <div className={archiveWrapper}>
       <ul className={ulWrapper} >
         {
-          !showDialog && props.projectData && props.projectData.map((item, index, array) => {
+          !showDialog && props.projectData && props.projectData.map((item, index) => {
             return (
               <React.Fragment key={index}>
                 <li className={archiveList} key={index} >
                   <button
                     onClick={() => handleOnLinkClick(item.title)}
                     className={projectItem(isHovered, imgIsAnimated)}
-                    onMouseMove={(e) => mouseMovement(e)}
                     onMouseEnter={() => onHover(index, true)}
                     onMouseLeave={() => !imgIsAnimated && onHover(index, false)} >{item.title}</button>
                 </li>
                 {currentPos === index
-                  ? <img src={item.images && item.images[0].url} alt="" className={photoOverlay(isHovered, imgIsAnimated)} /> : null
+                  ? (
+                    <div className={image(isHovered, imgIsAnimated)}>
+                      <img src={item.images && item.images[0].url} alt="" />
+                      <div className={wrap(imgIsAnimated)}>
+                      <div className={imageOverlay(imgIsAnimated, archieveMounted)}>
+                      </div>
+                      {/*   <svg className={svg(imgIsAnimated)} viewBox="0 0 1000 1">
+                          <path fill="#fff" fillOpacity="1" d="M0,32L48,80C96,128,192,224,288,224C384,224,480,128,576,90.7C672,53,768,75,864,96C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                        </svg>
+ */}
+                      </div>
+                   
+                    </div>
+
+                  ) : null
                 }
               </React.Fragment>
             )

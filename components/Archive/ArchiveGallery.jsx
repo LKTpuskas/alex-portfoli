@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { css } from 'emotion';
 import { withRouter, useRouter } from 'next/router'
 import classNames from 'classnames';
 import Carousel from './Carousel';
 import LinkButton from '../LinkButton';
 import Modal from './Modal'
+import Link from "next/link";
 
 const photoOverlay = (isHovered) => css`
   position: absolute;
@@ -28,29 +29,30 @@ const archiveList = css`
 `
 
 const ArchiveGallery = withRouter(props => {
+
   const [projectImage, setNewRouter] = useState(props.router.query.projectImage)
   useEffect(() => {
-      setNewRouter(props.router.query.projectImage)
-  },[props.router.query])
+    setNewRouter(props.router.query.projectImage)
+  }, [props.router.query])
 
-const projectName = props.router.query.projectName
-const getProject = props.projectData.find(project => project.title === projectName);
-const currentProjectIndex = props.projectData.findIndex(proj => proj.title === projectName)
-const trueIndex = Number(projectImage)
+  const projectName = props.router.query.projectName
+  const getProject = props.projectData.find(project => project.title === projectName);
+  const currentProjectIndex = props.projectData.findIndex(proj => proj.title === projectName)
+  const trueIndex = Number(projectImage)
   return (
     <div className={archiveWrapper}>
-     <Carousel 
-      {...props}  
-      projectImageIndex={trueIndex}
-      project={getProject}
-      currentProjectIndex={currentProjectIndex}
+      <Carousel
+        {...props}
+        projectImageIndex={trueIndex}
+        project={getProject}
+        currentProjectIndex={currentProjectIndex}
       />
     </div>
   )
 })
 
-ArchiveGallery.getInitialProps = async () => {
+/* ArchiveGallery.getInitialProps = async () => {
   return {};
-};
+}; */
 
-export default ArchiveGallery;
+export default memo(ArchiveGallery)
