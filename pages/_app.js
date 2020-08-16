@@ -160,8 +160,8 @@ function MyApp({ Component, pageProps, router }) {
 
     <CursorContextProvider>
       <div className={classNames(BodyHtml, Body)}>
-       <CustomCursor clickScale={1.05} style={cursorCircle}/>
-       <Component key={router.route} windowWidth={windowWidth} modalType={modalType} modalMounted={showModal} {...bulkData} />
+       {!isMobile && <CustomCursor clickScale={1.05} style={cursorCircle}/>}
+       <Component key={router.route} isMobile={isMobile} windowWidth={windowWidth} modalType={modalType} modalMounted={showModal} {...bulkData} />
      {/*  <Page key={router.route} router={router}>
       </Page> */}
       <Nav router={router} isAbout={isAbout} triggerModal={triggerModal} isMobile={isMobile} setOnHoverFooter={setOnHoverFooter}/>

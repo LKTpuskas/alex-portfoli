@@ -26,7 +26,7 @@ export const archiveFooter = css`
     font-size: 18px;
   }
   @media (min-width: 900px) {
-    font-size: 22px;
+    font-size: 18px;
   }
 /* cubic-bezier() values for first example from preceding demo page */
 /*     transition-timing-function: cubic-bezier(.1, .1, .2, .1);

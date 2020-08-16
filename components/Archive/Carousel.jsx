@@ -1,18 +1,13 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
-import ImageSlide from './ImageSlide';
-import Link from 'next/link';
-import Arrow from './Archive';
-import { css } from 'emotion';
-import { CSSTransition } from 'react-transition-group';
-import LinkButton from '../LinkButton';
+import ImageSlide from './ImageSlide'
+
+import { css } from 'emotion'
 import Router from 'next/router'
-import { useSwipeable, Swipeable } from 'react-swipeable';
-import { cursorBackground } from '../Page'
+import { useSwipeable } from 'react-swipeable'
 import CustomCursor from '../CustomCursor'
-import { useRouter } from 'next/router'
-import { useCursorContext } from '../CursorContext'
 
+import { useCursorContext } from '../CursorContext'
 
 const textCursor = (isMobile) => css`
   pointer-events: none;
@@ -20,23 +15,7 @@ const textCursor = (isMobile) => css`
   z-index: 100;
   transition: 200ms;
 `
-const imageEnter = css`
-  opacity: 0;
-`
-const imageEnterActive = css`
-  opacity: 1;
-  transition: opacity 200ms;
-`
-const imageExit = css`
-  opacity: 1;
-`
-const imageExitActive = css`
-  opacity: 0;
-  transition: opacity 200ms;
-`
-const imageExitDone = css`
-  background-color: blue;
-`
+
 //  flex-direction row on desktop
 const flexRowWrapper = (imgMounted) => css`
   display: flex;
@@ -52,7 +31,7 @@ const flexRowWrapper = (imgMounted) => css`
     padding: 10% 150px;
   }
   @media (min-width: 900px) {
-    padding: 8% 420px;
+    padding: 4% 420px;
   }
 `
 
@@ -61,24 +40,6 @@ const archiveWrapper = css`
   justify-content: center;
   width: 100vw;
 
-`;
-
-const scrollButton = css`
-  height: 100%;
-  width: 100%;
-  background-color: transparent;
-  float: left;
-`
-
-const closeBtn = css`
-  text-align: right;
-  margin: 2rem 2rem;
-`
-
-const scrollButtonWrapper = css`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
 `;
 
 const imageOverlay = (isAnimated) => css`
@@ -105,7 +66,7 @@ const imagetext = css`
   margin-bottom: 10px;
   font-size: 12px;
   @media (min-width: 700px) {
-    font-size: 18px;
+    font-size: 16px;
   }
 `
 
@@ -114,17 +75,12 @@ const cursortext = css`
 `
 
 function Carousel(props) {
-  const router = useRouter()
- 
-  const cursorContent = useRef(null)
   const { mouseCoordinate } = useCursorContext();
-  const [mousePosition, setCarMousePos] = useState(props.mousePosition)
   const [isFaded, setIsFaded] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(props.projectImageIndex)
   const [currentProjectIndex, setCurrentProjectIndex] = useState(props.currentProjectIndex)
   const [carouselMounted, setCarouselMounted] = useState(false)
-  const [isNextPrevious, setIsNextPrevious] = useState(false)
-  // console.log('props.mousePosition', props.mousePosition)
+
   useEffect(() => {
     const timer1 = setTimeout(() => setCarouselMounted(true), 700)
     return () => {
@@ -135,7 +91,6 @@ function Carousel(props) {
   useEffect(() => {
     setCurrentImageIndex(props.projectImageIndex)
     setCurrentProjectIndex(props.currentProjectIndex)
-    setCarMousePos(props.mousePosition)
   }, [props.projectImageIndex, props.currentProjectIndex, props.mousePosition])
 
   const handleNextPosition = (shouldResetIndex) => {
@@ -164,7 +119,7 @@ function Carousel(props) {
     const trueIndex = index
     setCurrentImageIndex(trueIndex)
     setCurrentProjectIndex(previousProject)
-    setIsNextPrevious(true)
+
     Router.push('/[projectName]/[projectImage]', `/${selectedProject}/${trueIndex}`)
   }
 
@@ -179,7 +134,7 @@ function Carousel(props) {
     const selectedProject = props.projectData[nextProject].title
     setCurrentImageIndex(trueIndex)
     setCurrentProjectIndex(nextProject)
-    setIsNextPrevious(true)
+
     Router.push('/[projectName]/[projectImage]', `/${selectedProject}/${trueIndex}`)
   }
 
@@ -210,7 +165,7 @@ function Carousel(props) {
   }
   return !isNaN(currentImageIndex) && <div className={archiveWrapper}>
     <div {...handlers} onClick={event => !isMobile && onClickWindow(event)} className={flexRowWrapper(carouselMounted)}>
-      {!onHoverFooter && <CustomCursor style={cursortext} clickScale={1} childrenXPos={-10} childrenYPos={-15}>
+      {!isMobile && !onHoverFooter && <CustomCursor style={cursortext} clickScale={1} childrenXPos={-10} childrenYPos={-15}>
         <div>{handleCursorText()}</div>
       </CustomCursor>}
       <div className={imagetext}>{`${project && project.title} ${currentImageIndex}/${project && project.images.length}`}</div>

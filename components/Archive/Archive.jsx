@@ -90,7 +90,7 @@ const image = (isHovered, isAnimated) => css`
     width: 450px;
   }
   @media (min-width: 900px) {
-    width: 500px;
+    width: 400px;
   }
 `
 
@@ -178,19 +178,6 @@ const Archive = memo(props => {
     const timer1 = setTimeout(() => setArchieveMounted(true), 700)
     return () => {
       clearTimeout(timer1)
-    }
-  }, [])
-
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      console.log('App is changing to: ', url)
-    }
-
-    Router.events.on('routeChangeStart', handleRouteChange)
-
-    return () => {
-      Router.events.off('routeChangeStart', handleRouteChange)
-
     }
   }, [])
 
